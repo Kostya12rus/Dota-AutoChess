@@ -13,11 +13,6 @@ AutoChestHelper.AutoChessAllChess =  Menu.AddOption({"Kostya12rus","AutoChest He
 AutoChestHelper.AutoChessDrowItem =  Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник"}, "Рисовать лежащие вещи", "Рисует иконками вещи на земле")
 AutoChestHelper.AutoChessWinChance = Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник"}, "Показывать возможный шанс победы", "Показывает счетчит возможной победы")
 
-
-
-
---AutoChestHelper.Key =        Menu.AddKeyOption({"Kostya12rus","AutoChest Helper"}, " ", Enum.ButtonCode.BUTTON_CODE_NONE)
---AutoChestHelper.Slider =        Menu.AddOption({"Kostya12rus","AutoChest Helper"}, " ", "", 0, 1, 100000)
 AutoChestHelper.Font = Renderer.LoadFont("Tahoma", 23, Enum.FontWeight.EXTRABOLD)
 AutoChestHelper.Font1 = Renderer.LoadFont("Tahoma", 15, Enum.FontWeight.EXTRABOLD)
 
