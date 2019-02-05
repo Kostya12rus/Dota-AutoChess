@@ -140,6 +140,7 @@ AutoChestHelper.Chess =
 }
 
 function AutoChestHelper.OnDraw()
+    if GameRules.GetGameMode() ~= 15 then return end
     if Menu.IsEnabled(AutoChestHelper.TrigerActiv) and Engine.IsInGame() then
         AutoChestHelper.AllNpc = {}
         for i,j in pairs(Heroes.GetAll()) do --создание списка нпс у героев
@@ -387,7 +388,7 @@ function AutoChestHelper.OnDraw()
         end
     end
     
-    if not AutoChestHelper.CanWork then return end
+    if not AutoChestHelper.CanWork or not AutoChestHelper.Hero then return end
 
     if Menu.IsEnabled(AutoChestHelper.AutoChessStack) then -- стак юнитов в одного большого
         local skill1 = NPC.GetAbility(AutoChestHelper.Hero, "pick_chess")
@@ -436,6 +437,7 @@ function AutoChestHelper.OnDraw()
 end
 
 function AutoChestHelper.OnUpdate()
+    if GameRules.GetGameMode() ~= 15 then return end
     AutoChestHelper.CanWork = false
     if not Menu.IsEnabled(AutoChestHelper.TrigerActiv) or not Engine.IsInGame() then return end
     if not AutoChestHelper.Hero or not Heroes.Contains(AutoChestHelper.Hero) then
