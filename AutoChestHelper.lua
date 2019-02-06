@@ -390,19 +390,6 @@ function AutoChestHelper.OnDraw()
     
     if not AutoChestHelper.CanWork or not AutoChestHelper.Hero then return end
 
-    if Menu.IsEnabled(AutoChestHelper.AutoChessStack) then -- стак юнитов в одного большого
-        local skill1 = NPC.GetAbility(AutoChestHelper.Hero, "pick_chess")
-        local x,y = 1000,500
-        if skill1 and Ability.IsCastable(skill1, 0) and Ability.IsActivated(skill1) then
-            local tablenpscount = AutoChestHelper.SimpleFindNpcHelper()
-            for i,j in pairs(tablenpscount) do
-                if j and j > 2 then
-                    Renderer.DrawTextCentered(AutoChestHelper.Font, 1000,500, "Можно создать большого юнита нажмите левую кнопку мыши", 1)
-                    AutoChestHelper.NeedStackUnit(i)
-                end
-            end
-        end
-    end
     if Menu.IsEnabled(AutoChestHelper.AutoChessWinChance) then --создание надписи шанс на победу
         local size_x, size_y = Renderer.GetScreenSize()
         size_x, size_y = size_x * 0.5, size_y*0.3
@@ -434,6 +421,11 @@ function AutoChestHelper.OnDraw()
             end
         end
     end
+    if AutoChestHelper.StackDraw then -- писать о стаке на экране
+        local size_x, size_y = Renderer.GetScreenSize()
+        size_x, size_y = size_x * 0.5, size_y * 0.4
+        Renderer.DrawTextCentered(AutoChestHelper.Font, size_x, size_y, "Можно создать большого юнита нажмите левую кнопку мыши", 1)
+    end
 end
 
 function AutoChestHelper.OnUpdate()
@@ -455,6 +447,21 @@ function AutoChestHelper.OnUpdate()
         if KostyaUtils.Distance2Objects(AutoChestHelper.Hero, needpos) > 100 then
             if not NPC.IsRunning(AutoChestHelper.Hero) and Menu.IsEnabled(AutoChestHelper.AutoChessMoveToPos) then
                 NPC.MoveTo(AutoChestHelper.Hero, needpos)
+            end
+        end
+    end
+
+    if Menu.IsEnabled(AutoChestHelper.AutoChessStack) then -- стак юнитов в одного большого
+        AutoChestHelper.StackDraw = false
+        local skill1 = NPC.GetAbility(AutoChestHelper.Hero, "pick_chess")
+        local x,y = 1000,500
+        if skill1 and Ability.IsCastable(skill1, 0) and Ability.IsActivated(skill1) then
+            local tablenpscount = AutoChestHelper.SimpleFindNpcHelper()
+            for i,j in pairs(tablenpscount) do
+                if j and j > 2 then
+                    AutoChestHelper.StackDraw = true
+                    AutoChestHelper.NeedStackUnit(i)
+                end
             end
         end
     end
