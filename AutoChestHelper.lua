@@ -270,12 +270,14 @@ function AutoChestHelper.OnDraw()
                                     local result = JSON.Decode(body)
                                     if string.find(body,"success") and result then
                                         local gamest = result.ranking_info
-                                        if gamest then
-                                            for i,j in pairs(gamest) do
-                                                if j.score then
-                                                    AutoChestHelper.PlayerGametable[player].mmr = j.score
-                                                else
-                                                    AutoChestHelper.PlayerGametable[player].mmr = 0.0
+                                        if string.len(body) < 44 then
+                                            AutoChestHelper.PlayerGametable[player].mmr = 0
+                                        else
+                                            if gamest then
+                                                for i,j in pairs(gamest) do
+                                                    if j.score then
+                                                        AutoChestHelper.PlayerGametable[player].mmr = j.score
+                                                    end
                                                 end
                                             end
                                         end
@@ -487,6 +489,19 @@ function AutoChestHelper.OnUpdate()
         end
     end
     AutoChestHelper.CanWork = true
+end
+
+function AutoChestHelper.OnEntityCreate(ent)
+    if not ent or not Entity.IsNPC(ent) or not NPC.GetUnitName(ent) then return end
+    local HasItChess = false
+    if AutoChestHelper.FindHasUnit(NPC.GetUnitName(ent),Heroes.GetLocal()) then
+        HasItChess = true
+    end
+    if HasItChess then
+        Console.Print(NPC.GetUnitName(ent))
+        Particle.Create("particles/econ/items/dazzle/dazzle_ti6_gold/dazzle_ti6_shallow_grave_gold.vpcf",Enum.ParticleAttachment.PATTACH_POINT_FOLLOW, ent)
+        Particle.Create("particles/units/heroes/hero_dazzle/dazzle_armor_friend_ring_sparks.vpcf",Enum.ParticleAttachment.PATTACH_CENTER_FOLLOW, ent)
+    end
 end
 
 function AutoChestHelper.FindPlayer(id)
