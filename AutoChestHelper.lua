@@ -9,12 +9,12 @@ AutoChessHelper.AutoChessMoveToPos = Menu.AddOption({"Kostya12rus","AutoChest He
 AutoChessHelper.AutoChessblinHero =  Menu.AddOption({"Kostya12rus","AutoChest Helper","Игровой помощник"}, "Подсветка героев", "Подсвечивает героев в покупке если они уже имется на доске")
 
 AutoChessHelper.AutoChessPlayers =   Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Таблица игроков"}, "Включение/Выключение", "Создает таблицу на экране, которую можно открыть и закрыть")
-AutoChessHelper.AutoChessPlayersX =  Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Таблица игроков"}, "X позиция на экране", "Перемещение панели по горизонтали", 0, size_x-100, 20)
-AutoChessHelper.AutoChessPlayersY =  Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Таблица игроков"}, "Y позиция на экране", "Перемещение панели по вертикали", 0, size_y-100, 20)
+AutoChessHelper.AutoChessPlayersX =  Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Таблица игроков"}, "X позиция игроков на экране", "Перемещение панели по горизонтали", 0, size_x-100, 20)
+AutoChessHelper.AutoChessPlayersY =  Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Таблица игроков"}, "Y позиция игроков на экране", "Перемещение панели по вертикали", 0, size_y-100, 20)
 AutoChessHelper.AutoChessAllChess =  Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Рисовать таблицу шахмат"}, "Включение/Выключение", "Рисует иконками таблицу всех шахмат и их количество")
-AutoChessHelper.AutoChessAllChessX = Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Рисовать таблицу шахмат"}, "X позиция на экране", "Перемещение панели по горизонтали", 0, size_x-100, 20)
-AutoChessHelper.AutoChessAllChessY = Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Рисовать таблицу шахмат"}, "Y позиция на экране", "Перемещение панели по вертикали", 0, size_y-100, 20)
-AutoChessHelper.AutoChessAllChessS = Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Рисовать таблицу шахмат"}, "Размер солбца с щахмотами", "Длина столба", 0, 1000, 20)
+AutoChessHelper.AutoChessAllChessX = Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Рисовать таблицу шахмат"}, "X позиция шахмат на экране", "Перемещение панели по горизонтали", 0, size_x-100, 20)
+AutoChessHelper.AutoChessAllChessY = Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Рисовать таблицу шахмат"}, "Y позиция шахмат на экране", "Перемещение панели по вертикали", 0, size_y-100, 20)
+AutoChessHelper.AutoChessAllChessS = Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Рисовать таблицу шахмат"}, "Размер столбца с шахматами", "Длина столбца", 0, 1000, 20)
 AutoChessHelper.AutoChessConsole =   Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник"}, "Информация в консоли", "Перед игрой пишет статистику о игроках в консоль чита")
 AutoChessHelper.AutoChessChessHero = Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник"}, "Рисовать шахматы под игроками", "Рисует иконки шахмат и их количество у каждого игрока")
 AutoChessHelper.AutoChessDrowItem =  Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник"}, "Рисовать лежащие вещи", "Рисует иконками вещи на земле")
@@ -420,7 +420,7 @@ function AutoChessHelper.OnDraw()
                         local img = KostyaUtils.LoadingImgFullName("panorama/images/items/".. string.gsub(Ability.GetTextureName(item),"item_","")  .."_png.vtex_c")
                         if img then
                             local sizeimg = 25
-                            Renderer.DrawImage(img, x-16, y, math.floor(sizeimg*1.5), math.floor(sizeimg))
+                            Renderer.DrawImage(img, x-16, y, math.floor(sizeimg*1.3), math.floor(sizeimg))
                             AutoChessHelper.MyBoxHasItem = true
                             if not NPC.IsRunning(AutoChessHelper.Hero) and Menu.IsEnabled(AutoChessHelper.AutoChessItem) then
                                 Player.PrepareUnitOrders(Players.GetLocal(), Enum.UnitOrder.DOTA_UNIT_ORDER_PICKUP_ITEM, j, Vector(0, 0, 0), nil, Enum.PlayerOrderIssuer.DOTA_ORDER_ISSUER_SELECTED_UNITS, AutoChessHelper.Hero)
