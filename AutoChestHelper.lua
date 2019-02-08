@@ -20,8 +20,14 @@ AutoChessHelper.AutoChessChessHero = Menu.AddOption({"Kostya12rus","AutoChest He
 AutoChessHelper.AutoChessDrowItem =  Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник"}, "Рисовать лежащие вещи", "Рисует иконками вещи на земле")
 AutoChessHelper.AutoChessWinChance = Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник"}, "Показывать возможный шанс победы", "Показывает счетчит возможной победы")
 
+AutoChessHelper.AutoChessDeckBuilder =   Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Графический помощник","Deck Builder"}, "Включение/Выключение","Создает таблицу на экране, которую можно открыть и закрыть")
+AutoChessHelper.AutoChessDeckblinHero = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Графический помощник","Deck Builder"}, "Подсветка героев из билда","Подсвечивает героев из билда в окне покупки")
+AutoChessHelper.AutoChessDeckX = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Графический помощник","Deck Builder"}, "X позиция панели билдов на экране", "Перемещение панели по горизонтали", 0, size_x-100, 20)
+AutoChessHelper.AutoChessDeckY = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Графический помощник","Deck Builder"}, "Y позиция панели билдов на экране", "Перемещение панели по вертикали", 0, size_y-100, 20)
+
 AutoChessHelper.Font = Renderer.LoadFont("Tahoma", 23, Enum.FontWeight.EXTRABOLD)
 AutoChessHelper.Font1 = Renderer.LoadFont("Tahoma", 15, Enum.FontWeight.EXTRABOLD)
+AutoChessHelper.FontChess = Renderer.LoadFont("Tahoma", 50, Enum.FontWeight.EXTRABOLD)
 
 AutoChessHelper.Spots = 
 {
@@ -145,6 +151,38 @@ AutoChessHelper.Chess =
     ["chess_nec_ssr"] = 'npc_dota_hero_necrolyte',
     ["chess_ck_ssr"] = 'npc_dota_hero_chaos_knight'
 }
+
+--[[
+https://dotachess.xyz/
+
+console code:
+
+res = [];
+for (let i = 0; i < hero_data.length; i++) {
+	let heroname = hero_data[i].icon.replace(".png", "");
+	switch (heroname) {
+		case "clockwerk":
+			heroname = "rattletrap";
+			break;
+		case "timbersaw":
+			heroname = "shredder";
+			break;
+		case "doom":
+			heroname = "doom_bringer";
+			break;
+	}
+
+	res[hero_data[i].id] = {
+		hero: "npc_dota_hero_" + heroname,
+		cost: hero_data[i].cost
+	}
+}
+console.log(JSON.stringify(res))
+]] --
+AutoChessHelper.DotaChessXYZ = JSON.Decode('[{"hero":"npc_dota_hero_axe","cost":1},{"hero":"npc_dota_hero_enchantress","cost":1},{"hero":"npc_dota_hero_ogre_magi","cost":1},{"hero":"npc_dota_hero_tusk","cost":1},{"hero":"npc_dota_hero_drow_ranger","cost":1},{"hero":"npc_dota_hero_bounty_hunter","cost":1},{"hero":"npc_dota_hero_rattletrap","cost":1},{"hero":"npc_dota_hero_shadow_shaman","cost":1},{"hero":"npc_dota_hero_batrider","cost":1},{"hero":"npc_dota_hero_tinker","cost":1},{"hero":"npc_dota_hero_antimage","cost":1},{"hero":"npc_dota_hero_crystal_maiden","cost":2},{"hero":"npc_dota_hero_beastmaster","cost":2},{"hero":"npc_dota_hero_juggernaut","cost":2},{"hero":"npc_dota_hero_shredder","cost":2},{"hero":"npc_dota_hero_queenofpain","cost":2},{"hero":"npc_dota_hero_puck","cost":2},{"hero":"npc_dota_hero_witch_doctor","cost":2},{"hero":"npc_dota_hero_slardar","cost":2},{"hero":"npc_dota_hero_chaos_knight","cost":2},{"hero":"npc_dota_hero_treant","cost":2},{"hero":"npc_dota_hero_luna","cost":2},{"hero":"npc_dota_hero_furion","cost":2},{"hero":"npc_dota_hero_lycan","cost":3},{"hero":"npc_dota_hero_venomancer","cost":3},{"hero":"npc_dota_hero_omniknight","cost":3},{"hero":"npc_dota_hero_razor","cost":3},{"hero":"npc_dota_hero_windrunner","cost":3},{"hero":"npc_dota_hero_phantom_assassin","cost":3},{"hero":"npc_dota_hero_abaddon","cost":3},{"hero":"npc_dota_hero_sand_king","cost":3},{"hero":"npc_dota_hero_slark","cost":3},{"hero":"npc_dota_hero_sniper","cost":3},{"hero":"npc_dota_hero_viper","cost":3},{"hero":"npc_dota_hero_nevermore","cost":3},{"hero":"npc_dota_hero_lina","cost":3},{"hero":"npc_dota_hero_doom_bringer","cost":4},{"hero":"npc_dota_hero_kunkka","cost":4},{"hero":"npc_dota_hero_troll_warlord","cost":4},{"hero":"npc_dota_hero_keeper_of_the_light","cost":4},{"hero":"npc_dota_hero_necrolyte","cost":4},{"hero":"npc_dota_hero_templar_assassin","cost":4},{"hero":"npc_dota_hero_alchemist","cost":4},{"hero":"npc_dota_hero_disruptor","cost":4},{"hero":"npc_dota_hero_medusa","cost":4},{"hero":"npc_dota_hero_dragon_knight","cost":4},{"hero":"npc_dota_hero_lone_druid","cost":4},{"hero":"npc_dota_hero_gyrocopter","cost":5},{"hero":"npc_dota_hero_lich","cost":5},{"hero":"npc_dota_hero_tidehunter","cost":5},{"hero":"npc_dota_hero_enigma","cost":5},{"hero":"npc_dota_hero_techies","cost":5},{"hero":"npc_dota_hero_tiny","cost":1},{"hero":"npc_dota_hero_morphling","cost":2},{"hero":"npc_dota_hero_terrorblade","cost":3}]');
+
+AutoChessHelper.Builds = JSON.Decode('[{"url":"https://dotachess.xyz/?build=17-3,20-13,24-0,26-52,27-37,28-18,29-23,30-36,31-38&enemy","description":"x9 WARRIORS"},{"url":"https://dotachess.xyz/?build=12-25,17-34,19-19,21-10,23-29,24-15,26-54,28-36,30-45&enemy","description":"Deamons + knights"},{"url":"https://dotachess.xyz/?build=16-3,17-23,18-22,19-20,20-40,24-1,25-46,26-24,27-30,28-50&enemy","description":"Druids + BEASTs"},{"url":"https://dotachess.xyz/?build=17-8,18-12,19-0,20-13,21-38,26-7,27-43,28-17&enemy","description":"Troll + orc + shamans"},{"url":"https://dotachess.xyz/?build=8-10,9-45,10-20,16-22,17-46,18-41,24-1,25-33,26-16,31-28&enemy","description":"Elf + Druid + Dragons"},{"url":"https://dotachess.xyz/?build=16-0,17-13,18-3,19-23,20-36,21-38,24-43,25-7,26-8,27-17&enemy","description":"Warriors + Trolls"},{"url":"https://dotachess.xyz/?build=16-8,17-19,18-25,19-29,20-45,24-21,25-17,26-7,27-38&enemy","description":"knights + Trolls"},{"url":"https://dotachess.xyz/?build=16-5,17-6,18-14,19-42,24-9,25-51,26-47&enemy","description":"Goblin + Mech"},{"url":"https://dotachess.xyz/?build=16-12,17-29,18-40,19-49,24-32,25-27,26-4,27-44,28-48&enemy","description":"Hunters + UNDEAD"},{"url":"https://dotachess.xyz/?build=16-5,17-30,18-41,19-40,20-29,24-15,25-28,26-31,27-4,28-48&enemy","description":"Assasins + UNDEAD"},{"url":"https://dotachess.xyz/?build=8-45,9-33,10-50,16-2,17-48,18-16,24-26,25-39,26-35&enemy","description":"Mage + Dragons"},{"url":"https://dotachess.xyz/?build=0-34,2-39,4-26,9-47,11-6,16-42,18-48,20-14,25-50,27-9&enemy","description":"Mech + Mage + Warlocks"},{"url":"https://dotachess.xyz/?build=9-36,10-13,11-12,12-0,13-49,18-4,19-43,20-27,22-44,24-32&enemy","description":"Orc + Hunters"}]');
+
 
 function AutoChessHelper.OnDraw()
     if GameRules.GetGameMode() ~= 15 then return end
@@ -440,6 +478,129 @@ function AutoChessHelper.OnDraw()
         size_x, size_y = size_x * 0.5, size_y * 0.4
         Renderer.DrawTextCentered(AutoChessHelper.Font, size_x, size_y, "Можно создать большого юнита нажмите левую кнопку мыши", 1)
     end
+
+    if Menu.IsEnabled(AutoChessHelper.AutoChessDeckBuilder) then -- DeckBuilder
+        
+        local x, y =  Menu.GetValue(AutoChessHelper.AutoChessDeckX),  Menu.GetValue(AutoChessHelper.AutoChessDeckY)
+        local padding_x, padding_y = 6, 5
+        local image_w, image_h = 24, 27
+        local boardmatrix_x, boardmatrix_y = 8, 4
+
+        local pred_x, pred_y, pred_r = x-50, y-40, 30
+        
+        if not AutoChessHelper.NeedPrediction then
+            Renderer.DrawText(AutoChessHelper.FontChess, pred_x, pred_y - 18, "⟳")
+            if Input.IsCursorInRect(pred_x, pred_y, pred_r, pred_r) and Input.IsKeyDownOnce(Enum.ButtonCode.MOUSE_LEFT) then
+                AutoChessHelper.NeedPrediction = true
+            end
+        end
+
+        local numofrows = 12
+        local row_y = pred_y + 35
+
+        if AutoChessHelper.buildUniques then
+            if Input.IsCursorInRect(pred_x - 4, row_y, 50, 12 * numofrows) and Input.IsKeyDownOnce(Enum.ButtonCode.MOUSE_LEFT) then
+                for buildn = 0, numofrows do
+                    if Input.IsCursorInRect(pred_x - 4, row_y + (buildn * 12), 50, 12) then
+                        Console.RunCommand(string.format("ach.choose_build %s", AutoChessHelper.buildUniques[buildn + 1][1]))
+                    end
+                end
+            end
+        end
+
+        if AutoChessHelper.buildUniques then
+            Renderer.SetDrawColor(185, 214, 124, 255)
+            local itemsdrowes = 0
+
+            local colorstep = 255 / numofrows
+            for n, m in pairs(AutoChessHelper.buildUniques) do
+                Renderer.SetDrawColor(math.floor(colorstep * itemsdrowes), 255 - (itemsdrowes * 12), itemsdrowes, 255)
+                Renderer.DrawText(AutoChessHelper.Font1, pred_x - 4, row_y, string.format("%2.2d - %s", m[1], m[2]))
+
+                row_y = row_y + 12
+
+                itemsdrowes = itemsdrowes + 1
+                if itemsdrowes >= numofrows then
+                    break
+                end
+            end
+            Renderer.SetDrawColor(255, 255, 255, 255)
+        end
+
+        if AutoChessHelper.NeedPrediction and not AutoChessHelper.isPredictionWorking then
+            -- вычисление самой неповторяющейся сборки
+            AutoChessHelper.isPredictionWorking = true
+            Alerts.Add(string.format("Find unpopular builds..."), 1)
+            AutoChessHelper.buildUniques = {}
+
+            for i, b in ipairs(AutoChessHelper.Builds) do
+                local build = getBuildByUrl(b.url)
+                local buildHeroes = {}
+                for i2, p in pairs(build) do
+                    local chp = explode("-", p)
+                    local unit_id = tonumber(chp[2])
+                    local hero = AutoChessHelper.DotaChessXYZ[unit_id + 1].hero
+                    buildHeroes[hero] = unit_id
+                end
+
+                local buildCleanPoints = 0
+                for t, f in pairs(AutoChessHelper.AllNpc) do
+
+                    local isTeamNpc = Entity.IsSameTeam(NPCs.Get(f), AutoChessHelper.Hero)
+                    Log.Write(string.format("%s is teammate: %s", t, isTeamNpc));
+
+                    if not isTeamNpc then
+                        if buildHeroes[t] then
+                            buildCleanPoints = buildCleanPoints + 1
+                            -- Log.Write(string.format("%s %s",t,f));
+                        end
+                    end
+                end
+                -- Log.Write(string.format("build %s - popularity: %s",i, buildCleanPoints));
+                table.insert(AutoChessHelper.buildUniques, { i, buildCleanPoints })
+            end
+
+            table.sort(AutoChessHelper.buildUniques, function(a, b) return (a[2] < b[2]) end)
+            AutoChessHelper.NeedPrediction = false
+            AutoChessHelper.isPredictionWorking = false
+        end
+
+        if AutoChessHelper.ChoosenBuild then
+            -- отрисовка билда
+
+            Renderer.SetDrawColor(255, 255, 255, 45)
+
+            if AutoChessHelper.ChoosenBuildName then
+                Renderer.DrawText(AutoChessHelper.Font1, x, y - 15, AutoChessHelper.ChoosenBuildName)
+            end
+
+            for i = 0, boardmatrix_x - 1 do
+                for j = 0, boardmatrix_y - 1 do
+                    Renderer.DrawOutlineRect(x + (i * image_w) + (i * padding_x), y + (j * image_h) + (j * padding_y), image_w, image_h)
+                end
+            end
+            Renderer.SetDrawColor(255, 255, 255, 255)
+
+            for key, pair in pairs(AutoChessHelper.ChoosenBuild) do
+
+                local chp = explode("-", pair)
+                local chess_coord = tonumber(chp[1])
+                local unit_id = tonumber(chp[2])
+                local hero = AutoChessHelper.DotaChessXYZ[unit_id + 1].hero
+                local chess_name = AutoChessHelper.Chess[hero]
+                -- Console.Print(string.format("Chess: %s - pos: %s", chess_name,chess_coord))
+
+                local img = KostyaUtils.LoadingImgFullName("panorama/images/heroes/selection/" .. hero .. "_png.vtex_c")
+                if img then
+                    local row_int = math.floor(chess_coord / boardmatrix_x) - 1
+                    local tempx = ((chess_coord - (row_int * boardmatrix_x)) - boardmatrix_x)
+                    local cx = x + (tempx * image_w) + (tempx * padding_x)
+                    local cy = y + ((row_int + 1) * image_h) + (row_int * padding_y) + padding_y
+                    Renderer.DrawImage(img, cx, cy, image_w, image_h)
+                end
+            end
+        end
+    end
 end
 
 function AutoChessHelper.OnUpdate()
@@ -504,18 +665,40 @@ function AutoChessHelper.OnUpdate()
 end
 
 function AutoChessHelper.OnEntityCreate(ent)
-    if not Menu.IsEnabled(AutoChessHelper.AutoChessblinHero) then return end
     if not ent or not Entity.IsNPC(ent) or not NPC.GetUnitName(ent) then return end
     local HasItChess = false
-    if AutoChessHelper.FindHasUnit(NPC.GetUnitName(ent),Heroes.GetLocal()) then
-        HasItChess = true
+    if Menu.IsEnabled(AutoChessHelper.AutoChessDeckBuilder) and Menu.IsEnabled(AutoChessHelper.AutoChessDeckblinHero) then  -- если включена опция подсветки героя из билда
+       
+        local heroname = NPC.GetUnitName(ent)
+
+        if AutoChessHelper.ChoosenBuild then
+            for i, value in ipairs(AutoChessHelper.DotaChessXYZ) do
+                if value.hero == heroname then
+                    for j, pair in ipairs(AutoChessHelper.ChoosenBuild) do
+                        local chp = explode("-", pair)
+                        local unit_id = tonumber(chp[2])
+                        if AutoChessHelper.DotaChessXYZ[unit_id +1].hero == heroname then
+                            HasItChess = true
+                            break
+                        end
+                    end
+                end
+            end
+        end
+    elseif Menu.IsEnabled(AutoChessHelper.AutoChessblinHero) then -- если включена опция подсветки героя на доске
+        if AutoChessHelper.FindHasUnit(NPC.GetUnitName(ent),Heroes.GetLocal()) then
+            HasItChess = true
+        end
     end
+    
     if HasItChess then
         Console.Print(NPC.GetUnitName(ent))
         Particle.Create("particles/econ/items/dazzle/dazzle_ti6_gold/dazzle_ti6_shallow_grave_gold.vpcf",Enum.ParticleAttachment.PATTACH_POINT_FOLLOW, ent)
         Particle.Create("particles/units/heroes/hero_dazzle/dazzle_armor_friend_ring_sparks.vpcf",Enum.ParticleAttachment.PATTACH_CENTER_FOLLOW, ent)
     end
 end
+
+
 
 function AutoChessHelper.FindPlayer(id) --ищет игрока по ID, возвращает userData
     if not id then return end
@@ -718,6 +901,69 @@ function AutoChessHelper.OnGameEnd()
   AutoChessHelper.init()
   AutoChessHelper.PlayerGametable = {}
 end
+
+Console.AddCommand("ach.choose_build", 1, function(args) -- ach.choose_build <номер сборки>
+    if AutoChessHelper.Builds[tonumber(args[2])] then
+        local build = getBuildByUrl(AutoChessHelper.Builds[tonumber(args[2])].url);
+        Alerts.Add("ChessBuild successfully setted", 2)
+        AutoChessHelper.ChoosenBuildName = AutoChessHelper.Builds[tonumber(args[2])].description;
+        AutoChessHelper.ChoosenBuild = build;
+    end
+end)
+
+Console.AddCommand("ach.list_builds", 0, function() -- ach.list_builds выводит список всех загруженых сборок в консоль
+    for i, v in ipairs(AutoChessHelper.Builds) do
+        Console.Print(string.format("%s - %s", i, v.description))
+    end
+end)
+
+Console.AddCommand("ach.custom_build", 1, function(args) -- устанавливает свою сборку с сайта dotachess.xyz
+    local build = getBuildByUrl(args[2]);
+    Alerts.Add("ChessBuild successfully setted", 2)
+    AutoChessHelper.ChoosenBuildName = "Custom build";
+    AutoChessHelper.ChoosenBuild = build;
+end)
+
+function getBuildByUrl(url) --функция берет build параметр с ссылки на сборку и возвращает пары значений [позиция] - [id_героя] 
+    local t = parseurl(url)
+    local chess_coords = explode(",", t.build)
+    return chess_coords;
+end
+
+function parseurl(s) --функция парсит ссылкку и возвращает гет-параметры в виде объекта
+    local ans = {}
+    for k, v in s:gmatch('([^&=?]-)=([^&=?]+)') do
+        ans[k] = v
+    end
+    return ans
+end
+
+function explode(div, str) --функция разбивает строку по делиметру
+    if (div == '') then return false end
+    local pos, arr = 0, {}
+    for st, sp in function() return string.find(str, div, pos, true) end do
+        table.insert(arr, string.sub(str, pos, st - 1))
+        pos = sp + 1
+    end
+    table.insert(arr, string.sub(str, pos))
+    return arr
+end
+
+function round(num, numDecimalPlaces) --функция округления чисел до точки
+    local mult = 10 ^ (numDecimalPlaces or 0)
+    return math.floor(num * mult + 0.5) / mult
+end
+
+function has_value(tab, key, val)
+    for index, value in ipairs(tab) do
+        if value[key] == val then
+            return true
+        end
+    end
+
+    return false
+end
+
 AutoChessHelper.init()
 
 return AutoChessHelper
