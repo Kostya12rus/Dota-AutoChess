@@ -1,22 +1,33 @@
-local AutoChestHelper = {}
+local AutoChessHelper = {}
 local KostyaUtils = require("KostyaUtils/Utils")
 
-AutoChestHelper.TrigerActiv =        Menu.AddOption({"Kostya12rus","AutoChest Helper"}, "Enabling|Disabling Script", "")
-AutoChestHelper.AutoChessStack =     Menu.AddOption({"Kostya12rus","AutoChest Helper","Игровой помощник"}, "Помощь в стаке", "Помогает вам собрать из маленького в большого юнита")
-AutoChestHelper.AutoChessItem =      Menu.AddOption({"Kostya12rus","AutoChest Helper","Игровой помощник"}, "Подбирать вещи", "Автоматически собирает лежащие вещи")
-AutoChestHelper.AutoChessMoveToPos = Menu.AddOption({"Kostya12rus","AutoChest Helper","Игровой помощник"}, "Занимать оптимальную позицию", "курьер автоматически бежит на оптимальную позицию")
+local size_x, size_y = Renderer.GetScreenSize()
+AutoChessHelper.TrigerActiv =        Menu.AddOption({"Kostya12rus","AutoChest Helper"}, "Enabling|Disabling Script", "")
+AutoChessHelper.AutoChessStack =     Menu.AddOption({"Kostya12rus","AutoChest Helper","Игровой помощник"}, "Помощь в стаке", "Помогает вам собрать из маленького в большого юнита")
+AutoChessHelper.AutoChessItem =      Menu.AddOption({"Kostya12rus","AutoChest Helper","Игровой помощник"}, "Подбирать вещи", "Автоматически собирает лежащие вещи")
+AutoChessHelper.AutoChessMoveToPos = Menu.AddOption({"Kostya12rus","AutoChest Helper","Игровой помощник"}, "Занимать оптимальную позицию", "курьер автоматически бежит на оптимальную позицию")
+AutoChessHelper.AutoChessblinHero =  Menu.AddOption({"Kostya12rus","AutoChest Helper","Игровой помощник"}, "Подсветка героев", "Подсвечивает героев в покупке если они уже имется на доске")
 
-AutoChestHelper.AutoChessPlayers =   Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник"}, "Таблица игроков", "Создает таблицу на экране, которую можно открыть и закрыть")
-AutoChestHelper.AutoChessConsole =   Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник"}, "Информация в консоли", "Перед игрой пишет статистику о игроках в консоль чита")
-AutoChestHelper.AutoChessChessHero = Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник"}, "Рисовать шахматы под игроками", "Рисует иконки шахмат и их количество у каждого игрока")
-AutoChestHelper.AutoChessAllChess =  Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник"}, "Рисовать таблицу шахмат", "Рисует иконками таблицу всех шахмат и их количество")
-AutoChestHelper.AutoChessDrowItem =  Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник"}, "Рисовать лежащие вещи", "Рисует иконками вещи на земле")
-AutoChestHelper.AutoChessWinChance = Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник"}, "Показывать возможный шанс победы", "Показывает счетчит возможной победы")
 
-AutoChestHelper.Font = Renderer.LoadFont("Tahoma", 23, Enum.FontWeight.EXTRABOLD)
-AutoChestHelper.Font1 = Renderer.LoadFont("Tahoma", 15, Enum.FontWeight.EXTRABOLD)
 
-AutoChestHelper.Spots = 
+AutoChessHelper.AutoChessPlayers =   Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Таблица игроков"}, "Включение/Выключение", "Создает таблицу на экране, которую можно открыть и закрыть")
+AutoChessHelper.AutoChessPlayersX =  Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Таблица игроков"}, "X позиция на экране", "Перемещение панели по горизонтали", 0, size_x-100, 20)
+AutoChessHelper.AutoChessPlayersY =  Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Таблица игроков"}, "Y позиция на экране", "Перемещение панели по вертикали", 0, size_y-100, 20)
+
+AutoChessHelper.AutoChessAllChess =  Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Рисовать таблицу шахмат"}, "Включение/Выключение", "Рисует иконками таблицу всех шахмат и их количество")
+AutoChessHelper.AutoChessAllChessX = Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Рисовать таблицу шахмат"}, "X позиция на экране", "Перемещение панели по горизонтали", 0, size_x-100, 20)
+AutoChessHelper.AutoChessAllChessY = Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Рисовать таблицу шахмат"}, "Y позиция на экране", "Перемещение панели по вертикали", 0, size_y-100, 20)
+AutoChessHelper.AutoChessAllChessS = Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Рисовать таблицу шахмат"}, "Размер солбца с щахмотами", "Длина столба", 0, 1000, 20)
+
+AutoChessHelper.AutoChessConsole =   Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник"}, "Информация в консоли", "Перед игрой пишет статистику о игроках в консоль чита")
+AutoChessHelper.AutoChessChessHero = Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник"}, "Рисовать шахматы под игроками", "Рисует иконки шахмат и их количество у каждого игрока")
+AutoChessHelper.AutoChessDrowItem =  Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник"}, "Рисовать лежащие вещи", "Рисует иконками вещи на земле")
+AutoChessHelper.AutoChessWinChance = Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник"}, "Показывать возможный шанс победы", "Показывает счетчит возможной победы")
+
+AutoChessHelper.Font = Renderer.LoadFont("Tahoma", 23, Enum.FontWeight.EXTRABOLD)
+AutoChessHelper.Font1 = Renderer.LoadFont("Tahoma", 15, Enum.FontWeight.EXTRABOLD)
+
+AutoChessHelper.Spots = 
 {
     {
         pos1 = Vector(-3015.232421875, 2955.3837890625, 136.70153808594),
@@ -76,7 +87,7 @@ AutoChestHelper.Spots =
     }
 }
 
-AutoChestHelper.Chess =
+AutoChessHelper.Chess =
 {		
     ["npc_dota_hero_tusk"] = 'chess_tusk',
     ["npc_dota_hero_axe"] = 'chess_axe',
@@ -139,68 +150,68 @@ AutoChestHelper.Chess =
     ["npc_dota_hero_techies"] = 'chess_tech'
 }
 
-function AutoChestHelper.OnDraw()
+function AutoChessHelper.OnDraw()
     if GameRules.GetGameMode() ~= 15 then return end
-    if Menu.IsEnabled(AutoChestHelper.TrigerActiv) and Engine.IsInGame() then
-        AutoChestHelper.AllNpc = {}
+    if Menu.IsEnabled(AutoChessHelper.TrigerActiv) and Engine.IsInGame() then
+        AutoChessHelper.AllNpc = {}
         for i,j in pairs(Heroes.GetAll()) do --создание списка нпс у героев
-            if not AutoChestHelper.CountNpc then
-                AutoChestHelper.CountNpc = {}
+            if not AutoChessHelper.CountNpc then
+                AutoChessHelper.CountNpc = {}
             end
             if j and Heroes.Contains(j) and Entity.IsAlive(j) then
-                if AutoChestHelper.GetCountAllNPC(j) then
-                    if not AutoChestHelper.CountNpc[j] then
-                        AutoChestHelper.CountNpc[j] = {}
+                if AutoChessHelper.GetCountAllNPC(j) then
+                    if not AutoChessHelper.CountNpc[j] then
+                        AutoChessHelper.CountNpc[j] = {}
                     end
-                    AutoChestHelper.CountNpc[j] = AutoChestHelper.GetCountAllNPC(j)
+                    AutoChessHelper.CountNpc[j] = AutoChessHelper.GetCountAllNPC(j)
                 end
-                if AutoChestHelper.CountNpc[j] then
+                if AutoChessHelper.CountNpc[j] then
                     Renderer.SetDrawColor(255, 255, 255, 255)
                     local x,y,v = KostyaUtils.WorldToScreen(j)
                     local sizeimg = 20
-                    local x = math.floor(x - (sizeimg*0.5*AutoChestHelper.tablemax(AutoChestHelper.CountNpc[j]))) 
-                    for name,count in pairs(AutoChestHelper.CountNpc[j]) do
-                        if not AutoChestHelper.AllNpc[name] then
-                            AutoChestHelper.AllNpc[name] = 0
+                    local x = math.floor(x - (sizeimg*0.5*AutoChessHelper.tablemax(AutoChessHelper.CountNpc[j]))) 
+                    for name,count in pairs(AutoChessHelper.CountNpc[j]) do
+                        if not AutoChessHelper.AllNpc[name] then
+                            AutoChessHelper.AllNpc[name] = 0
                         end
-                        AutoChestHelper.AllNpc[name] = AutoChestHelper.AllNpc[name] + count
+                        AutoChessHelper.AllNpc[name] = AutoChessHelper.AllNpc[name] + count
                         local img = KostyaUtils.LoadingImgFullName("panorama/images/heroes/selection/".. name .. "_png.vtex_c")
-                        if img and v and Menu.IsEnabled(AutoChestHelper.AutoChessChessHero) then
+                        if img and v and Menu.IsEnabled(AutoChessHelper.AutoChessChessHero) then
                             Renderer.DrawImage(img, x, y, math.floor(sizeimg), math.floor(sizeimg*1.2))
-                            Renderer.DrawTextCentered(AutoChestHelper.Font, math.floor(x + sizeimg * 0.5), math.floor(y + sizeimg * 1.5), count, 1)
+                            Renderer.DrawTextCentered(AutoChessHelper.Font, math.floor(x + sizeimg * 0.5), math.floor(y + sizeimg * 1.5), count, 1)
                             x = x + sizeimg
                         end
                     end
                 end
             end
         end
-        if AutoChestHelper.AllNpc then -- создание таблицы всех нпс
+        if AutoChessHelper.AllNpc then -- создание таблицы всех нпс
             local counttable = {}
-            for i,j in pairs(AutoChestHelper.AllNpc) do
+            for i,j in pairs(AutoChessHelper.AllNpc) do
                 if i and j then
                     table.insert(counttable, {i, j})
                 end
             end
             if counttable then
                 table.sort (counttable, function (a, b) return (a[2] > b[2]) end)
-                local x,y = 10,400
+                local x,y = Menu.GetValue(AutoChessHelper.AutoChessAllChessX),Menu.GetValue(AutoChessHelper.AutoChessAllChessY)
                 for i,j in pairs(counttable) do
                     local img = KostyaUtils.LoadingImgFullName("panorama/images/heroes/selection/".. j[1] .. "_png.vtex_c")
                     if img then
                         Renderer.SetDrawColor(255, 255, 255, 255)
-                        if Menu.IsEnabled(AutoChestHelper.AutoChessAllChess) then
+                        if Menu.IsEnabled(AutoChessHelper.AutoChessAllChess) then
                             Renderer.DrawImage(img, x, y, 20, 23)
-                            if AutoChestHelper.FindHasUnit(j[1],Heroes.GetLocal()) then
+                            if AutoChessHelper.FindHasUnit(j[1],Heroes.GetLocal()) then
                                 Renderer.SetDrawColor(255, 0, 0, 255)
                             else
                                 Renderer.SetDrawColor(255, 255, 255, 255)
                             end
-                            Renderer.DrawTextCentered(AutoChestHelper.Font, x + 30, y + 11, j[2], 1)
+                            Renderer.DrawTextCentered(AutoChessHelper.Font, x + 30, y + 11, j[2], 1)
                             y = y + 25
                         end
-                        if y > 700 then
+                        if y - Menu.GetValue(AutoChessHelper.AutoChessAllChessY) > Menu.GetValue(AutoChessHelper.AutoChessAllChessS) then
                             x = x + 50
-                            y = 400
+                            y = Menu.GetValue(AutoChessHelper.AutoChessAllChessY)
                         end
                     end
                 end
@@ -210,13 +221,13 @@ function AutoChestHelper.OnDraw()
             for _,player in pairs(Players.GetAll()) do
                 if player and Players.Contains(player) then
                     if Player.GetPlayerData(player) then
-                        if not AutoChestHelper.PlayerGametable then
-                            AutoChestHelper.PlayerGametable = {}
+                        if not AutoChessHelper.PlayerGametable then
+                            AutoChessHelper.PlayerGametable = {}
                         end
-                        if not AutoChestHelper.PlayerGametable[player] then
+                        if not AutoChessHelper.PlayerGametable[player] then
                             local steamids = Player.GetPlayerData(player).steamid
-                            if steamids and AutoChestHelper.Steam32id(steamids) > 0 and AutoChestHelper.Steam32id(steamids) < 9387111184 then
-                                AutoChestHelper.PlayerGametable[player] = 
+                            if steamids and AutoChessHelper.Steam32id(steamids) > 0 and AutoChessHelper.Steam32id(steamids) < 9387111184 then
+                                AutoChessHelper.PlayerGametable[player] = 
                                 {
                                     connect1 = HTTP.NewConnection("http://101.200.189.65:431/dac/heros/get/@" .. steamids),
                                     connect2 = HTTP.NewConnection("http://101.200.189.65:431/dac/ranking/get?player_ids=" .. steamids),
@@ -229,29 +240,29 @@ function AutoChestHelper.OnDraw()
                                 }
                             end
                         end
-                        if AutoChestHelper.PlayerGametable[player] then
-                            if not AutoChestHelper.PlayerGametable[player].match or not AutoChestHelper.PlayerGametable[player].rank then
-                                if not AutoChestHelper.PlayerGametable[player].rqst1 or not AutoChestHelper.PlayerGametable[player].rqst1:IsValid() then
-                                    AutoChestHelper.PlayerGametable[player].rqst1 = AutoChestHelper.PlayerGametable[player].connect1:AsyncRequest("GET")
+                        if AutoChessHelper.PlayerGametable[player] then
+                            if not AutoChessHelper.PlayerGametable[player].match or not AutoChessHelper.PlayerGametable[player].rank then
+                                if not AutoChessHelper.PlayerGametable[player].rqst1 or not AutoChessHelper.PlayerGametable[player].rqst1:IsValid() then
+                                    AutoChessHelper.PlayerGametable[player].rqst1 = AutoChessHelper.PlayerGametable[player].connect1:AsyncRequest("GET")
                                 end
-                                if  AutoChestHelper.PlayerGametable[player].rqst1 
-                                and AutoChestHelper.PlayerGametable[player].rqst1:IsValid() 
-                                and AutoChestHelper.PlayerGametable[player].rqst1:IsResolved() then
-                                    local body = AutoChestHelper.PlayerGametable[player].rqst1:Get()
+                                if  AutoChessHelper.PlayerGametable[player].rqst1 
+                                and AutoChessHelper.PlayerGametable[player].rqst1:IsValid() 
+                                and AutoChessHelper.PlayerGametable[player].rqst1:IsResolved() then
+                                    local body = AutoChessHelper.PlayerGametable[player].rqst1:Get()
                                     local result = JSON.Decode(body)
                                     if string.find(body,"success") and result then
                                         local gamest = result.user_info
                                         if gamest then
                                             for i,j in pairs(gamest) do
                                                 if j.match then
-                                                    AutoChestHelper.PlayerGametable[player].match = j.match
+                                                    AutoChessHelper.PlayerGametable[player].match = j.match
                                                 else
-                                                    AutoChestHelper.PlayerGametable[player].match = 0.0
+                                                    AutoChessHelper.PlayerGametable[player].match = 0.0
                                                 end
                                                 if j.mmr_level then
-                                                    AutoChestHelper.PlayerGametable[player].rank = j.mmr_level
+                                                    AutoChessHelper.PlayerGametable[player].rank = j.mmr_level
                                                 else
-                                                    AutoChestHelper.PlayerGametable[player].rank = 0.0
+                                                    AutoChessHelper.PlayerGametable[player].rank = 0.0
                                                 end
                                             end
                                         end
@@ -259,24 +270,24 @@ function AutoChestHelper.OnDraw()
                                 end
                             end
                             ---------------------------
-                            if not AutoChestHelper.PlayerGametable[player].mmr then
-                                if not AutoChestHelper.PlayerGametable[player].rqst2 or not AutoChestHelper.PlayerGametable[player].rqst2:IsValid() then
-                                    AutoChestHelper.PlayerGametable[player].rqst2 = AutoChestHelper.PlayerGametable[player].connect2:AsyncRequest("GET")
+                            if not AutoChessHelper.PlayerGametable[player].mmr then
+                                if not AutoChessHelper.PlayerGametable[player].rqst2 or not AutoChessHelper.PlayerGametable[player].rqst2:IsValid() then
+                                    AutoChessHelper.PlayerGametable[player].rqst2 = AutoChessHelper.PlayerGametable[player].connect2:AsyncRequest("GET")
                                 end
-                                if  AutoChestHelper.PlayerGametable[player].rqst2 
-                                and AutoChestHelper.PlayerGametable[player].rqst2:IsValid() 
-                                and AutoChestHelper.PlayerGametable[player].rqst2:IsResolved() then
-                                    local body = AutoChestHelper.PlayerGametable[player].rqst2:Get()
+                                if  AutoChessHelper.PlayerGametable[player].rqst2 
+                                and AutoChessHelper.PlayerGametable[player].rqst2:IsValid() 
+                                and AutoChessHelper.PlayerGametable[player].rqst2:IsResolved() then
+                                    local body = AutoChessHelper.PlayerGametable[player].rqst2:Get()
                                     local result = JSON.Decode(body)
                                     if string.find(body,"success") and result then
                                         local gamest = result.ranking_info
                                         if string.len(body) < 44 then
-                                            AutoChestHelper.PlayerGametable[player].mmr = 0
+                                            AutoChessHelper.PlayerGametable[player].mmr = 0
                                         else
                                             if gamest then
                                                 for i,j in pairs(gamest) do
                                                     if j.score then
-                                                        AutoChestHelper.PlayerGametable[player].mmr = j.score
+                                                        AutoChessHelper.PlayerGametable[player].mmr = j.score
                                                     end
                                                 end
                                             end
@@ -284,19 +295,19 @@ function AutoChestHelper.OnDraw()
                                     end
                                 end
                             end
-                            if AutoChestHelper.PlayerGametable[player].needwrite then
-                                if AutoChestHelper.PlayerGametable[player].mmr and AutoChestHelper.PlayerGametable[player].match and AutoChestHelper.PlayerGametable[player].rank then
-                                    if Menu.IsEnabled(AutoChestHelper.AutoChessConsole) then
+                            if AutoChessHelper.PlayerGametable[player].needwrite then
+                                if AutoChessHelper.PlayerGametable[player].mmr and AutoChessHelper.PlayerGametable[player].match and AutoChessHelper.PlayerGametable[player].rank then
+                                    if Menu.IsEnabled(AutoChessHelper.AutoChessConsole) then
                                         Console.Print
                                         (
                                             "----[AutoChess]---- " .. 
                                             Player.GetName(player) .." - ".. 
-                                            AutoChestHelper.PlayerGametable[player].match .. " сыгранно игр, " ..
-                                            AutoChestHelper.PlayerGametable[player].mmr .. " ммр, " ..
-                                            AutoChestHelper.PlayerGametable[player].rank .. " ранг"
+                                            AutoChessHelper.PlayerGametable[player].match .. " сыгранно игр, " ..
+                                            AutoChessHelper.PlayerGametable[player].mmr .. " ммр, " ..
+                                            AutoChessHelper.PlayerGametable[player].rank .. " ранг"
                                         )
                                     end
-                                    AutoChestHelper.PlayerGametable[player].needwrite = false
+                                    AutoChessHelper.PlayerGametable[player].needwrite = false
                                 end
                             end
                         end
@@ -304,22 +315,22 @@ function AutoChestHelper.OnDraw()
                 end
             end
         end
-        if Heroes.GetLocal() and Menu.IsEnabled(AutoChestHelper.AutoChessPlayers) then -- таблица игроков
-            local x,y = 320,30
-            if AutoChestHelper.DrawTable then
+        if Heroes.GetLocal() and Menu.IsEnabled(AutoChessHelper.AutoChessPlayers) then -- таблица игроков
+            local x,y = Menu.GetValue(AutoChessHelper.AutoChessPlayersX),Menu.GetValue(AutoChessHelper.AutoChessPlayersY)
+            if AutoChessHelper.DrawTable then
                 Renderer.SetDrawColor(0, 255, 0, 200)
             else
                 Renderer.SetDrawColor(255, 0, 0, 200)
             end
             Renderer.DrawFilledRect(x-30, y-20, 20, 20)
             if Input.IsCursorInRect(x-30, y-20, 20, 20) and Input.IsKeyDownOnce(Enum.ButtonCode.MOUSE_LEFT) then
-                AutoChestHelper.DrawTable = not AutoChestHelper.DrawTable
+                AutoChessHelper.DrawTable = not AutoChessHelper.DrawTable
             end
-            if AutoChestHelper.DrawTable then
+            if AutoChessHelper.DrawTable then
                 local first = true
                 for i,j in pairs(Heroes.GetAll()) do
                     if j and Heroes.Contains(j) and NPCs.Contains(j) then
-                        local playerdata = AutoChestHelper.FindPlayer(Hero.GetPlayerID(j))
+                        local playerdata = AutoChessHelper.FindPlayer(Hero.GetPlayerID(j))
                         if playerdata then
                             Renderer.SetDrawColor(255, 255, 255, 255)
                             local name = tostring(Player.GetName(playerdata)) 
@@ -327,52 +338,52 @@ function AutoChestHelper.OnDraw()
                                 if string.len(name) > 10 then
                                     name = string.sub(name, 0, 10)
                                 end
-                                Renderer.DrawText(AutoChestHelper.Font1, x, y, name, 1)
+                                Renderer.DrawText(AutoChessHelper.Font1, x, y, name, 1)
                                 if first then
-                                    Renderer.DrawText(AutoChestHelper.Font1, x, y-20, "Nickname", 1)
+                                    Renderer.DrawText(AutoChessHelper.Font1, x, y-20, "Nickname", 1)
                                 end
                                 x = x + 100
                             end
+                            local Level = NPC.GetCurrentLevel(j)
+                            if Level then
+                                Renderer.DrawText(AutoChessHelper.Font1, x, y, math.ceil(Level), 1)
+                                if first then
+                                    Renderer.DrawText(AutoChessHelper.Font1, x, y-20, "Level", 1)
+                                end
+                                x = x + 50
+                            end
                             local hp = Entity.GetHealth(j)
                             if hp then
-                                Renderer.DrawText(AutoChestHelper.Font1, x, y, math.floor(hp), 1)
+                                Renderer.DrawText(AutoChessHelper.Font1, x, y, math.ceil(hp), 1)
                                 if first then
-                                    Renderer.DrawText(AutoChestHelper.Font1, x, y-20, "Health", 1)
+                                    Renderer.DrawText(AutoChessHelper.Font1, x, y-20, "Health", 1)
                                 end
                                 x = x + 50
                             end
                             local mana = NPC.GetMana(j)
                             if mana then
-                                Renderer.DrawText(AutoChestHelper.Font1, x, y, math.floor(mana), 1)
+                                Renderer.DrawText(AutoChessHelper.Font1, x, y, math.ceil(mana), 1)
                                 if first then
-                                    Renderer.DrawText(AutoChestHelper.Font1, x, y-20, "Gold", 1)
+                                    Renderer.DrawText(AutoChessHelper.Font1, x, y-20, "Gold", 1)
                                 end
                                 x = x + 50
                             end
-                            local playerinfo = AutoChestHelper.PlayerGametable[playerdata]
+                            local playerinfo = AutoChessHelper.PlayerGametable[playerdata]
                             if playerinfo then
                                 local match = playerinfo.match
                                 if match then
-                                    Renderer.DrawText(AutoChestHelper.Font1, x, y, math.floor(match), 1)
+                                    Renderer.DrawText(AutoChessHelper.Font1, x, y, math.ceil(match), 1)
                                     if first then
-                                        Renderer.DrawText(AutoChestHelper.Font1, x, y-20, "Matches", 1)
-                                    end
-                                    x = x + 50
-                                end
-                                local rank = playerinfo.rank
-                                if rank then
-                                    Renderer.DrawText(AutoChestHelper.Font1, x, y, math.floor(rank), 1)
-                                    if first then
-                                        Renderer.DrawText(AutoChestHelper.Font1, x, y-20, "Rank", 1)
+                                        Renderer.DrawText(AutoChessHelper.Font1, x, y-20, "Matches", 1)
                                     end
                                     x = x + 50
                                 end
                                 local mmr = playerinfo.mmr
                                 if mmr then
-                                    Renderer.DrawText(AutoChestHelper.Font1, x, y, math.floor(mmr), 1)
-                                    h,w = Renderer.MeasureText(AutoChestHelper.Font1, mmr)
+                                    Renderer.DrawText(AutoChessHelper.Font1, x, y, math.ceil(mmr), 1)
+                                    h,w = Renderer.MeasureText(AutoChessHelper.Font1, mmr)
                                     if first then
-                                        Renderer.DrawText(AutoChestHelper.Font1, x, y-20, "MMR", 1)
+                                        Renderer.DrawText(AutoChessHelper.Font1, x, y-20, "MMR", 1)
                                     end
                                     x = x + 50
                                 end
@@ -382,7 +393,7 @@ function AutoChestHelper.OnDraw()
                                 first = false
                             end
                             y = y + 20
-                            x = 320
+                            x = Menu.GetValue(AutoChessHelper.AutoChessPlayersX)
                         end
                     end
                 end
@@ -390,32 +401,36 @@ function AutoChestHelper.OnDraw()
         end
     end
     
-    if not AutoChestHelper.CanWork or not AutoChestHelper.Hero then return end
+    if not AutoChessHelper.CanWork or not AutoChessHelper.Hero then return end
 
-    if Menu.IsEnabled(AutoChestHelper.AutoChessWinChance) then --создание надписи шанс на победу
+    if Menu.IsEnabled(AutoChessHelper.AutoChessWinChance) then --создание надписи шанс на победу
         local size_x, size_y = Renderer.GetScreenSize()
         size_x, size_y = size_x * 0.5, size_y*0.3
-        if AutoChestHelper.WinChance then
-            Renderer.DrawTextCentered(AutoChestHelper.Font, size_x, size_y, AutoChestHelper.WinChance, 1)
+        if AutoChessHelper.WinChance then
+            Renderer.DrawTextCentered(AutoChessHelper.Font, size_x, size_y, AutoChessHelper.WinChance, 1)
         else
-            Renderer.DrawTextCentered(AutoChestHelper.Font, size_x, size_y, "Round not started", 1)
+            Renderer.DrawTextCentered(AutoChessHelper.Font, size_x, size_y, "Round not started", 1)
         end
     end
-    if Menu.IsEnabled(AutoChestHelper.AutoChessDrowItem) then -- функция рисования иконок предметов на земле и подберание их 
+    if Menu.IsEnabled(AutoChessHelper.AutoChessDrowItem) then -- функция рисования иконок предметов на земле и подберание их 
         local items = PhysicalItems.GetAll()
-        AutoChestHelper.MyBoxHasItem = false
+        AutoChessHelper.MyBoxHasItem = false
         for i,j in pairs(items) do
             if j and PhysicalItems.Contains(j) then
                 local item = PhysicalItem.GetItem(j)
-                if item and Entity.IsAbility(item) and AutoChestHelper.ObjectInBox(AutoChestHelper.MyBox.pos1,AutoChestHelper.MyBox.pos2,Entity.GetAbsOrigin(j)) then
+                if item and Entity.IsAbility(item) and AutoChessHelper.ObjectInBox(AutoChessHelper.MyBox.pos1,AutoChessHelper.MyBox.pos2,Entity.GetAbsOrigin(j)) then
                     local x, y, v = KostyaUtils.WorldToScreen(Entity.GetAbsOrigin(j))
                     if v then
                         local img = KostyaUtils.LoadingImgFullName("panorama/images/items/".. string.gsub(Ability.GetTextureName(item),"item_","")  .."_png.vtex_c")
                         if img then
-                            Renderer.DrawImage(img, x-16, y, 32, 32)
-                            AutoChestHelper.MyBoxHasItem = true
-                            if not NPC.IsRunning(AutoChestHelper.Hero) and Menu.IsEnabled(AutoChestHelper.AutoChessItem) then
-                                Player.PrepareUnitOrders(Players.GetLocal(), Enum.UnitOrder.DOTA_UNIT_ORDER_PICKUP_ITEM, j, Vector(0, 0, 0), nil, Enum.PlayerOrderIssuer.DOTA_ORDER_ISSUER_SELECTED_UNITS, AutoChestHelper.Hero)
+                            local sizeimg = 25
+                            Renderer.DrawImage(img, x-16, y, math.floor(sizeimg*1.5), math.floor(sizeimg))
+                            AutoChessHelper.MyBoxHasItem = true
+                            if not NPC.IsRunning(AutoChessHelper.Hero) and Menu.IsEnabled(AutoChessHelper.AutoChessItem) then
+                                Player.PrepareUnitOrders(Players.GetLocal(), Enum.UnitOrder.DOTA_UNIT_ORDER_PICKUP_ITEM, j, Vector(0, 0, 0), nil, Enum.PlayerOrderIssuer.DOTA_ORDER_ISSUER_SELECTED_UNITS, AutoChessHelper.Hero)
+                            end
+                            if not Menu.IsEnabled(AutoChessHelper.AutoChessItem) then
+                                AutoChessHelper.MyBoxHasItem = false
                             end
                         end
                     end
@@ -423,78 +438,79 @@ function AutoChestHelper.OnDraw()
             end
         end
     end
-    if AutoChestHelper.StackDraw then -- писать о стаке на экране
+    if AutoChessHelper.StackDraw then -- писать о стаке на экране
         local size_x, size_y = Renderer.GetScreenSize()
         size_x, size_y = size_x * 0.5, size_y * 0.4
-        Renderer.DrawTextCentered(AutoChestHelper.Font, size_x, size_y, "Можно создать большого юнита нажмите левую кнопку мыши", 1)
+        Renderer.DrawTextCentered(AutoChessHelper.Font, size_x, size_y, "Можно создать большого юнита нажмите левую кнопку мыши", 1)
     end
 end
 
-function AutoChestHelper.OnUpdate()
+function AutoChessHelper.OnUpdate()
     if GameRules.GetGameMode() ~= 15 then return end
-    AutoChestHelper.CanWork = false
-    if not Menu.IsEnabled(AutoChestHelper.TrigerActiv) or not Engine.IsInGame() then return end
-    if not AutoChestHelper.Hero or not Heroes.Contains(AutoChestHelper.Hero) then
-        AutoChestHelper.Hero = Heroes.GetLocal()
+    AutoChessHelper.CanWork = false
+    if not Menu.IsEnabled(AutoChessHelper.TrigerActiv) or not Engine.IsInGame() then return end
+    if not AutoChessHelper.Hero or not Heroes.Contains(AutoChessHelper.Hero) then
+        AutoChessHelper.Hero = Heroes.GetLocal()
     end
-    if not AutoChestHelper.Hero or not NPCs.Contains(AutoChestHelper.Hero) then return end
-    if not AutoChestHelper.MyBox then -- поиск своего спота на карте
-        AutoChestHelper.MyBox = {}
-        AutoChestHelper.MyBox.pos1,AutoChestHelper.MyBox.pos2,AutoChestHelper.Ipos = AutoChestHelper.FindMyBox()
+    if not AutoChessHelper.Hero or not NPCs.Contains(AutoChessHelper.Hero) then return end
+    if not AutoChessHelper.MyBox then -- поиск своего спота на карте
+        AutoChessHelper.MyBox = {}
+        AutoChessHelper.MyBox.pos1,AutoChessHelper.MyBox.pos2,AutoChessHelper.Ipos = AutoChessHelper.FindMyBox()
     end
-    AutoChestHelper.MyNpcs,AutoChestHelper.EnemyNpcs = AutoChestHelper.TableNpcOnBox(AutoChestHelper.MyBox.pos1,AutoChestHelper.MyBox.pos2)
+    AutoChessHelper.MyNpcs,AutoChessHelper.EnemyNpcs = AutoChessHelper.TableNpcOnBox(AutoChessHelper.MyBox.pos1,AutoChessHelper.MyBox.pos2)
     
-    if not AutoChestHelper.MyBoxHasItem and AutoChestHelper.Ipos then -- бежать герою на оптимальную позицию
-        local needpos = AutoChestHelper.Spots[AutoChestHelper.Ipos].pos5
-        if KostyaUtils.Distance2Objects(AutoChestHelper.Hero, needpos) > 100 then
-            if not NPC.IsRunning(AutoChestHelper.Hero) and Menu.IsEnabled(AutoChestHelper.AutoChessMoveToPos) then
-                NPC.MoveTo(AutoChestHelper.Hero, needpos)
+    if not AutoChessHelper.MyBoxHasItem and AutoChessHelper.Ipos then -- бежать герою на оптимальную позицию
+        local needpos = AutoChessHelper.Spots[AutoChessHelper.Ipos].pos5
+        if KostyaUtils.Distance2Objects(AutoChessHelper.Hero, needpos) > 100 then
+            if not NPC.IsRunning(AutoChessHelper.Hero) and Menu.IsEnabled(AutoChessHelper.AutoChessMoveToPos) then
+                NPC.MoveTo(AutoChessHelper.Hero, needpos)
             end
         end
     end
 
-    if Menu.IsEnabled(AutoChestHelper.AutoChessStack) then -- стак юнитов в одного большого
-        AutoChestHelper.StackDraw = false
-        local skill1 = NPC.GetAbility(AutoChestHelper.Hero, "pick_chess")
+    if Menu.IsEnabled(AutoChessHelper.AutoChessStack) then -- стак юнитов в одного большого
+        AutoChessHelper.StackDraw = false
+        local skill1 = NPC.GetAbility(AutoChessHelper.Hero, "pick_chess")
         local x,y = 1000,500
         if skill1 and Ability.IsCastable(skill1, 0) and Ability.IsActivated(skill1) then
-            local tablenpscount = AutoChestHelper.SimpleFindNpcHelper()
+            local tablenpscount = AutoChessHelper.SimpleFindNpcHelper()
             for i,j in pairs(tablenpscount) do
                 if j and j > 2 then
-                    AutoChestHelper.StackDraw = true
-                    AutoChestHelper.NeedStackUnit(i)
+                    AutoChessHelper.StackDraw = true
+                    AutoChessHelper.NeedStackUnit(i)
                 end
             end
         end
     end
 
     do -- создание ДПС для моей команды и противника
-        if AutoChestHelper.MyNpcs and AutoChestHelper.EnemyNpcs then
-            AutoChestHelper.MyBox.MyDps,AutoChestHelper.MyBox.MyHp = AutoChestHelper.FindDpsOnSec(AutoChestHelper.MyNpcs,1)
-            AutoChestHelper.MyBox.EnemyDps,AutoChestHelper.MyBox.EnemyHp = AutoChestHelper.FindDpsOnSec(AutoChestHelper.EnemyNpcs,1)
+        if AutoChessHelper.MyNpcs and AutoChessHelper.EnemyNpcs then
+            AutoChessHelper.MyBox.MyDps,AutoChessHelper.MyBox.MyHp = AutoChessHelper.FindDpsOnSec(AutoChessHelper.MyNpcs,1)
+            AutoChessHelper.MyBox.EnemyDps,AutoChessHelper.MyBox.EnemyHp = AutoChessHelper.FindDpsOnSec(AutoChessHelper.EnemyNpcs,1)
             local howsecondsformesec, howsecondsforenemysec = 0,0
-            if AutoChestHelper.MyBox.MyDps > 0 then
-                howsecondsformesec = AutoChestHelper.MyBox.EnemyHp/AutoChestHelper.MyBox.MyDps
+            if AutoChessHelper.MyBox.MyDps > 0 then
+                howsecondsformesec = AutoChessHelper.MyBox.EnemyHp/AutoChessHelper.MyBox.MyDps
             end
-            if AutoChestHelper.MyBox.EnemyDps > 0 then
-                howsecondsforenemysec = AutoChestHelper.MyBox.MyHp/AutoChestHelper.MyBox.EnemyDps
+            if AutoChessHelper.MyBox.EnemyDps > 0 then
+                howsecondsforenemysec = AutoChessHelper.MyBox.MyHp/AutoChessHelper.MyBox.EnemyDps
             end
             if howsecondsforenemysec ~= 0 and howsecondsformesec ~= 0 then
                 local temp = howsecondsforenemysec - howsecondsformesec
-                    AutoChestHelper.WinChance = temp
+                    AutoChessHelper.WinChance = temp
             else
-                AutoChestHelper.WinChance = nil
+                AutoChessHelper.WinChance = nil
             end
 
         end
     end
-    AutoChestHelper.CanWork = true
+    AutoChessHelper.CanWork = true
 end
 
-function AutoChestHelper.OnEntityCreate(ent)
+function AutoChessHelper.OnEntityCreate(ent)
+    if not Menu.IsEnabled(AutoChessHelper.AutoChessblinHero) then return end
     if not ent or not Entity.IsNPC(ent) or not NPC.GetUnitName(ent) then return end
     local HasItChess = false
-    if AutoChestHelper.FindHasUnit(NPC.GetUnitName(ent),Heroes.GetLocal()) then
+    if AutoChessHelper.FindHasUnit(NPC.GetUnitName(ent),Heroes.GetLocal()) then
         HasItChess = true
     end
     if HasItChess then
@@ -504,7 +520,7 @@ function AutoChestHelper.OnEntityCreate(ent)
     end
 end
 
-function AutoChestHelper.FindPlayer(id)
+function AutoChessHelper.FindPlayer(id)
     if not id then return end
     for i,j in pairs(Players.GetAll()) do
         if j and Players.Contains(j) then
@@ -516,7 +532,7 @@ function AutoChestHelper.FindPlayer(id)
     return nil
 end
 
-function AutoChestHelper.tablemax(table)
+function AutoChessHelper.tablemax(table)
     if not table then return 0 end
     local count = 0 
     for i,j in pairs(table) do
@@ -527,10 +543,10 @@ function AutoChestHelper.tablemax(table)
     return count
 end
 
-function AutoChestHelper.FindHasUnit(unit,owner)
+function AutoChessHelper.FindHasUnit(unit,owner)
     if not unit or not owner or not Entity.IsAlive(owner) or not NPCs.Contains(owner) then return false end
-    if AutoChestHelper.CountNpc[owner] then
-        for name,count in pairs(AutoChestHelper.CountNpc[owner]) do
+    if AutoChessHelper.CountNpc[owner] then
+        for name,count in pairs(AutoChessHelper.CountNpc[owner]) do
             if name == unit then
                 return true
             end
@@ -539,14 +555,14 @@ function AutoChestHelper.FindHasUnit(unit,owner)
     return false
 end
 
-function AutoChestHelper.GetCountAllNPC(hero)
+function AutoChessHelper.GetCountAllNPC(hero)
     local temp = nil
     local npcs = NPCs.GetAll()
-    local tableposnpc = AutoChestHelper.FountSpotNpc(hero)
+    local tableposnpc = AutoChessHelper.FountSpotNpc(hero)
     for i,j in pairs(npcs) do
-        if j and NPCs.Contains(j) and NPC.IsCreep(j) and Entity.IsAlive(j) and AutoChestHelper.ObjectInBox(tableposnpc.pos1,tableposnpc.pos2,Entity.GetAbsOrigin(j)) then
+        if j and NPCs.Contains(j) and NPC.IsCreep(j) and Entity.IsAlive(j) and AutoChessHelper.ObjectInBox(tableposnpc.pos1,tableposnpc.pos2,Entity.GetAbsOrigin(j)) then
             if Entity.IsSameTeam(j, hero) and NPC.HasState(j, Enum.ModifierState.MODIFIER_STATE_NO_HEALTH_BAR) then
-                for o,p in pairs(AutoChestHelper.Chess) do
+                for o,p in pairs(AutoChessHelper.Chess) do
                     if string.find(NPC.GetUnitName(j),p) then
                         if not temp then 
                             temp = {}
@@ -573,25 +589,25 @@ function AutoChestHelper.GetCountAllNPC(hero)
     return temp
 end
 
-function AutoChestHelper.FountSpotNpc(npc)
+function AutoChessHelper.FountSpotNpc(npc)
     if not npc or not NPCs.Contains(npc) then return end
-    for i,j in pairs(AutoChestHelper.Spots) do
-        if AutoChestHelper.ObjectInBox(j.pos1,j.pos2, Entity.GetAbsOrigin(npc)) then
+    for i,j in pairs(AutoChessHelper.Spots) do
+        if AutoChessHelper.ObjectInBox(j.pos1,j.pos2, Entity.GetAbsOrigin(npc)) then
             return j
         end
     end
 end
 
-function AutoChestHelper.NeedStackUnit(nameunit)
+function AutoChessHelper.NeedStackUnit(nameunit)
     if not nameunit then return end
     local npcs = NPCs.GetAll()
     for i,j in pairs(npcs) do
-        if j and NPCs.Contains(j) and Entity.IsAlive(j) and NPC.IsCreep(j) and Entity.IsSameTeam(j, AutoChestHelper.Hero) and NPC.GetUnitName(j) == nameunit then
-            if AutoChestHelper.ObjectInBox(AutoChestHelper.MyBox.pos1,AutoChestHelper.MyBox.pos2,Entity.GetAbsOrigin(j)) then
-                if AutoChestHelper.ObjectInBox(AutoChestHelper.Spots[AutoChestHelper.Ipos].pos3,AutoChestHelper.Spots[AutoChestHelper.Ipos].pos4,Entity.GetAbsOrigin(j)) then
+        if j and NPCs.Contains(j) and Entity.IsAlive(j) and NPC.IsCreep(j) and Entity.IsSameTeam(j, AutoChessHelper.Hero) and NPC.GetUnitName(j) == nameunit then
+            if AutoChessHelper.ObjectInBox(AutoChessHelper.MyBox.pos1,AutoChessHelper.MyBox.pos2,Entity.GetAbsOrigin(j)) then
+                if AutoChessHelper.ObjectInBox(AutoChessHelper.Spots[AutoChessHelper.Ipos].pos3,AutoChessHelper.Spots[AutoChessHelper.Ipos].pos4,Entity.GetAbsOrigin(j)) then
                     local mod = NPC.GetModifier(j, "modifier_chess_picked")
                     if not mod then
-                        local skill1 = NPC.GetAbility(AutoChestHelper.Hero, "pick_chess")
+                        local skill1 = NPC.GetAbility(AutoChessHelper.Hero, "pick_chess")
                         if skill1 and Ability.IsCastable(skill1, 0) then
                             Ability.CastTarget(skill1, j)
                         end
@@ -602,13 +618,13 @@ function AutoChestHelper.NeedStackUnit(nameunit)
     end
 end
 
-function AutoChestHelper.SimpleFindNpcHelper()
+function AutoChessHelper.SimpleFindNpcHelper()
     local temptable = {}
     local npcs = NPCs.GetAll()
     for i,j in pairs(npcs) do
         if j and NPCs.Contains(j) and Entity.IsAlive(j) and NPC.IsCreep(j) then
-            if AutoChestHelper.ObjectInBox(AutoChestHelper.MyBox.pos1,AutoChestHelper.MyBox.pos2,Entity.GetAbsOrigin(j)) then
-                if Entity.IsSameTeam(j, AutoChestHelper.Hero) then
+            if AutoChessHelper.ObjectInBox(AutoChessHelper.MyBox.pos1,AutoChessHelper.MyBox.pos2,Entity.GetAbsOrigin(j)) then
+                if Entity.IsSameTeam(j, AutoChessHelper.Hero) then
                     if not temptable[NPC.GetUnitName(j)] then
                         temptable[NPC.GetUnitName(j)] = 1
                     else
@@ -621,7 +637,7 @@ function AutoChestHelper.SimpleFindNpcHelper()
     return temptable
 end
 
-function AutoChestHelper.FindDpsOnSec(tablenpcs,sec)
+function AutoChessHelper.FindDpsOnSec(tablenpcs,sec)
     if not tablenpcs or not sec then return end
     local dpc = 0
     local hpteam = 0
@@ -634,15 +650,15 @@ function AutoChestHelper.FindDpsOnSec(tablenpcs,sec)
     return dpc,hpteam
 end
 
-function AutoChestHelper.TableNpcOnBox(pos1,pos2)
+function AutoChessHelper.TableNpcOnBox(pos1,pos2)
     if not pos1 or not pos2 then return nil,nil end
     local mynpc = {}
     local enemynpc = {}
     local npcs = NPCs.GetAll()
     for i,j in pairs(npcs) do
         if j and NPCs.Contains(j) and Entity.IsAlive(j) and NPC.IsKillable(j) then
-            if Entity.GetAbsOrigin(j) and AutoChestHelper.ObjectInBox(pos1,pos2,Entity.GetAbsOrigin(j)) then
-                if Entity.IsSameTeam(j, AutoChestHelper.Hero) then
+            if Entity.GetAbsOrigin(j) and AutoChessHelper.ObjectInBox(pos1,pos2,Entity.GetAbsOrigin(j)) then
+                if Entity.IsSameTeam(j, AutoChessHelper.Hero) then
                     table.insert(mynpc, j)
                 else
                     table.insert(enemynpc, j)
@@ -653,7 +669,7 @@ function AutoChestHelper.TableNpcOnBox(pos1,pos2)
     return mynpc,enemynpc
 end
 
-function AutoChestHelper.ObjectInBox(object1,object2,checkObject)
+function AutoChessHelper.ObjectInBox(object1,object2,checkObject)
     if not object1 or not object2 or not checkObject then return end
     local x1,y1 = object1:GetX(),object1:GetY()
     local x2,y2 = object2:GetX(),object2:GetY()
@@ -666,38 +682,38 @@ function AutoChestHelper.ObjectInBox(object1,object2,checkObject)
     return false
 end
 
-function AutoChestHelper.FindMyBox()
-    if AutoChestHelper.Spots then
-        for i,j in pairs(AutoChestHelper.Spots) do
-            if AutoChestHelper.ObjectInBox(j.pos1,j.pos2, Entity.GetAbsOrigin(Heroes.GetLocal())) then
+function AutoChessHelper.FindMyBox()
+    if AutoChessHelper.Spots then
+        for i,j in pairs(AutoChessHelper.Spots) do
+            if AutoChessHelper.ObjectInBox(j.pos1,j.pos2, Entity.GetAbsOrigin(Heroes.GetLocal())) then
                 return j.pos1,j.pos2,i
             end
         end
     end
 end
 
-function AutoChestHelper.Steam32id(Input)
+function AutoChessHelper.Steam32id(Input)
     return Input - 76561197960265728
 end
 
-function AutoChestHelper.init()
+function AutoChessHelper.init()
     Console.Print("------------AutoChestUpdate------------")
-    AutoChestHelper.Hero = nil
-    AutoChestHelper.MyBox = nil
-    AutoChestHelper.WinChance = nil
-    AutoChestHelper.MyBoxHasItem = false
-    AutoChestHelper.MyNpcsTable = nil
-    AutoChestHelper.CountNpc = nil
-    AutoChestHelper.DrawTable = true
+    AutoChessHelper.Hero = nil
+    AutoChessHelper.MyBox = nil
+    AutoChessHelper.WinChance = nil
+    AutoChessHelper.MyBoxHasItem = false
+    AutoChessHelper.MyNpcsTable = nil
+    AutoChessHelper.CountNpc = nil
+    AutoChessHelper.DrawTable = true
 end
 
-function AutoChestHelper.OnGameStart()
-  AutoChestHelper.init()
+function AutoChessHelper.OnGameStart()
+  AutoChessHelper.init()
 end
-function AutoChestHelper.OnGameEnd()
-  AutoChestHelper.init()
-  AutoChestHelper.PlayerGametable = {}
+function AutoChessHelper.OnGameEnd()
+  AutoChessHelper.init()
+  AutoChessHelper.PlayerGametable = {}
 end
-AutoChestHelper.init()
+AutoChessHelper.init()
 
-return AutoChestHelper
+return AutoChessHelper
