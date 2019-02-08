@@ -1,24 +1,20 @@
 local AutoChessHelper = {}
 local KostyaUtils = require("KostyaUtils/Utils")
-
 local size_x, size_y = Renderer.GetScreenSize()
+
 AutoChessHelper.TrigerActiv =        Menu.AddOption({"Kostya12rus","AutoChest Helper"}, "Enabling|Disabling Script", "")
 AutoChessHelper.AutoChessStack =     Menu.AddOption({"Kostya12rus","AutoChest Helper","Игровой помощник"}, "Помощь в стаке", "Помогает вам собрать из маленького в большого юнита")
 AutoChessHelper.AutoChessItem =      Menu.AddOption({"Kostya12rus","AutoChest Helper","Игровой помощник"}, "Подбирать вещи", "Автоматически собирает лежащие вещи")
 AutoChessHelper.AutoChessMoveToPos = Menu.AddOption({"Kostya12rus","AutoChest Helper","Игровой помощник"}, "Занимать оптимальную позицию", "курьер автоматически бежит на оптимальную позицию")
 AutoChessHelper.AutoChessblinHero =  Menu.AddOption({"Kostya12rus","AutoChest Helper","Игровой помощник"}, "Подсветка героев", "Подсвечивает героев в покупке если они уже имется на доске")
 
-
-
 AutoChessHelper.AutoChessPlayers =   Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Таблица игроков"}, "Включение/Выключение", "Создает таблицу на экране, которую можно открыть и закрыть")
 AutoChessHelper.AutoChessPlayersX =  Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Таблица игроков"}, "X позиция на экране", "Перемещение панели по горизонтали", 0, size_x-100, 20)
 AutoChessHelper.AutoChessPlayersY =  Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Таблица игроков"}, "Y позиция на экране", "Перемещение панели по вертикали", 0, size_y-100, 20)
-
 AutoChessHelper.AutoChessAllChess =  Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Рисовать таблицу шахмат"}, "Включение/Выключение", "Рисует иконками таблицу всех шахмат и их количество")
 AutoChessHelper.AutoChessAllChessX = Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Рисовать таблицу шахмат"}, "X позиция на экране", "Перемещение панели по горизонтали", 0, size_x-100, 20)
 AutoChessHelper.AutoChessAllChessY = Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Рисовать таблицу шахмат"}, "Y позиция на экране", "Перемещение панели по вертикали", 0, size_y-100, 20)
 AutoChessHelper.AutoChessAllChessS = Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Рисовать таблицу шахмат"}, "Размер солбца с щахмотами", "Длина столба", 0, 1000, 20)
-
 AutoChessHelper.AutoChessConsole =   Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник"}, "Информация в консоли", "Перед игрой пишет статистику о игроках в консоль чита")
 AutoChessHelper.AutoChessChessHero = Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник"}, "Рисовать шахматы под игроками", "Рисует иконки шахмат и их количество у каждого игрока")
 AutoChessHelper.AutoChessDrowItem =  Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник"}, "Рисовать лежащие вещи", "Рисует иконками вещи на земле")
