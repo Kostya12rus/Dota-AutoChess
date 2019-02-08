@@ -85,71 +85,72 @@ AutoChessHelper.Spots =
 
 AutoChessHelper.Chess =
 {		
-    ["npc_dota_hero_tusk"] = 'chess_tusk',
-    ["npc_dota_hero_axe"] = 'chess_axe',
-    ["npc_dota_hero_enchantress"] = 'chess_eh',
-    ["npc_dota_hero_ogre_magi"] = 'chess_om',
-    ["npc_dota_hero_rattletrap"] = 'chess_clock',
-    ["npc_dota_hero_shadow_shaman"] = 'chess_ss',
-    ["npc_dota_hero_bounty_hunter"] = 'chess_bh',
-    ["npc_dota_hero_batrider"] = 'chess_bat',
-    ["npc_dota_hero_drow_ranger"] = 'chess_dr',
-    ["npc_dota_hero_tinker"] = 'chess_tk',
-    ["npc_dota_hero_antimage"] = 'chess_am',
-    ["npc_dota_hero_tiny"] = 'chess_tiny',
-    
-    ["npc_dota_hero_beastmaster"] = 'chess_bm',
-    ["npc_dota_hero_juggernaut"] = 'chess_jugg',
-    ["npc_dota_hero_shredder"] = 'chess_shredder',
-    ["npc_dota_hero_puck"] = 'chess_puck',
-    ["npc_dota_hero_chaos_knight"] = 'chess_ck',
-    ["npc_dota_hero_slardar"] = 'chess_slardar',
-    ["npc_dota_hero_luna"] = 'chess_luna',
-    ["npc_dota_hero_treant"] = 'chess_tp',
-    ["npc_dota_hero_queenofpain"] = 'chess_qop',
-    ["npc_dota_hero_witch_doctor"] = 'chess_wd',
-    ["npc_dota_hero_crystal_maiden"] = 'chess_cm',
-    ["npc_dota_hero_furion"] = 'chess_fur',
-    ["npc_dota_hero_morphling"] = 'chess_morph',
-    
-    ["npc_dota_hero_omniknight"] = 'chess_ok',
-    ["npc_dota_hero_razor"] = 'chess_razor',
-    ["npc_dota_hero_windrunner"] = 'chess_wr',
-    ["npc_dota_hero_sand_king"] = 'chess_sk',
-    ["npc_dota_hero_abaddon"] = 'chess_abaddon',
-    ["npc_dota_hero_slark"] = 'chess_slark',
-    ["npc_dota_hero_sniper"] = 'chess_sniper',
-    ["npc_dota_hero_nevermore"] = 'chess_sf',
-    ["npc_dota_hero_viper"] = 'chess_viper',
-    ["npc_dota_hero_lycan"] = 'chess_lyc',
-    ["npc_dota_hero_phantom_assassin"] = 'chess_pa',
-    ["npc_dota_hero_venomancer"] = 'chess_veno',
-    ["npc_dota_hero_lina"] = 'chess_lina',
-    ["npc_dota_hero_terrorblade"] = 'chess_tb',
-    
-    ["npc_dota_hero_kunkka"] = 'chess_kunkka',
-    ["npc_dota_hero_doom_bringer"] = 'chess_doom',
-    ["npc_dota_hero_troll_warlord"] = 'chess_troll',
-    ["npc_dota_hero_necrolyte"] = 'chess_nec',
-    ["npc_dota_hero_templar_assassin"] = 'chess_ta',
-    ["npc_dota_hero_medusa"] = 'chess_medusa',
-    ["npc_dota_hero_disruptor"] = 'chess_disruptor',
-    ["npc_dota_hero_alchemist"] = 'chess_ga',
-    ["npc_dota_hero_dragon_knight"] = 'chess_dk',
-    ["npc_dota_hero_keeper_of_the_light"] = 'chess_light',
-    ["npc_dota_hero_lone_druid"] = 'chess_ld',
-    
-    ["npc_dota_hero_gyrocopter"] = 'chess_gyro',
-    ["npc_dota_hero_lich"] = 'chess_lich',
-    ["npc_dota_hero_tidehunter"] = 'chess_th',
-    ["npc_dota_hero_enigma"] = 'chess_enigma',
-    ["npc_dota_hero_techies"] = 'chess_tech'
+	["chess_tusk"] = 'npc_dota_hero_tusk',
+    ["chess_cm"] = 'npc_dota_hero_crystal_maiden',
+    ["chess_axe"] = 'npc_dota_hero_axe',
+    ["chess_eh"] = 'npc_dota_hero_enchantress',
+    ["chess_om"] = 'npc_dota_hero_ogre_magi',
+    ["chess_am"] = 'npc_dota_hero_antimage',
+    ["chess_clock"] = 'npc_dota_hero_rattletrap',
+    ["chess_ss"] = 'npc_dota_hero_shadow_shaman',
+    ["chess_bh"] = 'npc_dota_hero_bounty_hunter',
+    ["chess_wd"] = 'npc_dota_hero_witch_doctor',
+    ["chess_tk"] = 'npc_dota_hero_tinker',
+    ["chess_bm"] = 'npc_dota_hero_beastmaster',
+    ["chess_jugg"] = 'npc_dota_hero_juggernaut',
+    ["chess_lyc"] = 'npc_dota_hero_lycan',
+    ["chess_shredder"] = 'npc_dota_hero_shredder',
+    ["chess_pa"] = 'npc_dota_hero_phantom_assassin',
+    ["chess_puck"] = 'npc_dota_hero_puck',
+    ["chess_slardar"] = 'npc_dota_hero_slardar',
+    ["chess_ck"] = 'npc_dota_hero_chaos_knight',
+    ["chess_dr"] = 'npc_dota_hero_drow_ranger',
+    ["chess_light"] = 'npc_dota_hero_keeper_of_the_light',
+    ["chess_razor"] = 'npc_dota_hero_razor',
+    ["chess_ok"] = 'npc_dota_hero_omniknight',
+    ["chess_wr"] = 'npc_dota_hero_windrunner',
+    ["chess_sk"] = 'npc_dota_hero_sand_king',
+    ["chess_abaddon"] = 'npc_dota_hero_abaddon',
+    ["chess_slark"] = 'npc_dota_hero_slark',
+    ["chess_sniper"] = 'npc_dota_hero_sniper',
+    ["chess_kunkka"] = 'npc_dota_hero_kunkka',
+    ["chess_doom"] = 'npc_dota_hero_doom_bringer',
+    ["chess_lina"] = 'npc_dota_hero_lina',
+    ["chess_troll"] = 'npc_dota_hero_troll_warlord',
+    ["chess_veno"] = 'npc_dota_hero_venomancer',
+    ["chess_nec"] = 'npc_dota_hero_necrolyte',
+    ["chess_ta"] = 'npc_dota_hero_templar_assassin',
+    ["chess_gyro"] = 'npc_dota_hero_gyrocopter',
+    ["chess_lich"] = 'npc_dota_hero_lich',
+    ["chess_qop"] = 'npc_dota_hero_queenofpain',
+    ["chess_th"] = 'npc_dota_hero_tidehunter',
+    ["chess_enigma"] = 'npc_dota_hero_enigma',
+	
+    ["chess_bat"] = 'npc_dota_hero_batrider',
+    ["chess_luna"] = 'npc_dota_hero_luna',
+    ["chess_tp"] = 'npc_dota_hero_treant',
+    ["chess_sf"] = 'npc_dota_hero_nevermore',
+    ["chess_dk"] = 'npc_dota_hero_dragon_knight',
+    ["chess_viper"] = 'npc_dota_hero_viper',
+    ["chess_medusa"] = 'npc_dota_hero_medusa',
+    ["chess_disruptor"] = 'npc_dota_hero_disruptor',
+    ["chess_ga"] = 'npc_dota_hero_alchemist',
+    ["chess_tech"] = 'npc_dota_hero_techies',
+	
+    ["chess_fur"] = 'npc_dota_hero_furion',
+    ["chess_ld"] = 'npc_dota_hero_lone_druid',
+    ["chess_morph"] = 'npc_dota_hero_morphling',
+    ["chess_tb"] = 'npc_dota_hero_terrorblade',
+    ["chess_tiny"] = 'npc_dota_hero_tiny',
+    ["chess_nec_ssr"] = 'npc_dota_hero_necrolyte',
+    ["chess_ck_ssr"] = 'npc_dota_hero_chaos_knight'
 }
 
 function AutoChessHelper.OnDraw()
     if GameRules.GetGameMode() ~= 15 then return end
     if Menu.IsEnabled(AutoChessHelper.TrigerActiv) and Engine.IsInGame() then
         AutoChessHelper.AllNpc = {}
+        
         for i,j in pairs(Heroes.GetAll()) do --создание списка нпс у героев
             if not AutoChessHelper.CountNpc then
                 AutoChessHelper.CountNpc = {}
@@ -516,7 +517,7 @@ function AutoChessHelper.OnEntityCreate(ent)
     end
 end
 
-function AutoChessHelper.FindPlayer(id)
+function AutoChessHelper.FindPlayer(id) --ищет игрока по ID, возвращает userData
     if not id then return end
     for i,j in pairs(Players.GetAll()) do
         if j and Players.Contains(j) then
@@ -528,7 +529,7 @@ function AutoChessHelper.FindPlayer(id)
     return nil
 end
 
-function AutoChessHelper.tablemax(table)
+function AutoChessHelper.tablemax(table) --ищет количество значений в таблице, возвращает число
     if not table then return 0 end
     local count = 0 
     for i,j in pairs(table) do
@@ -539,8 +540,9 @@ function AutoChessHelper.tablemax(table)
     return count
 end
 
-function AutoChessHelper.FindHasUnit(unit,owner)
+function AutoChessHelper.FindHasUnit(unit,owner) -- unit Имя нпс(Реальное), owner юзердата героя, возвращает true или false
     if not unit or not owner or not Entity.IsAlive(owner) or not NPCs.Contains(owner) then return false end
+    if not AutoChessHelper.CountNpc then return end
     if AutoChessHelper.CountNpc[owner] then
         for name,count in pairs(AutoChessHelper.CountNpc[owner]) do
             if name == unit then
@@ -551,7 +553,7 @@ function AutoChessHelper.FindHasUnit(unit,owner)
     return false
 end
 
-function AutoChessHelper.GetCountAllNPC(hero)
+function AutoChessHelper.GetCountAllNPC(hero) -- hero юзердата героя, ищет количество всех нпс и их количество, возвращает таблицу вида {[РеальноеИмяНпс] = количество}
     local temp = nil
     local npcs = NPCs.GetAll()
     local tableposnpc = AutoChessHelper.FountSpotNpc(hero)
@@ -559,20 +561,26 @@ function AutoChessHelper.GetCountAllNPC(hero)
         if j and NPCs.Contains(j) and NPC.IsCreep(j) and Entity.IsAlive(j) and AutoChessHelper.ObjectInBox(tableposnpc.pos1,tableposnpc.pos2,Entity.GetAbsOrigin(j)) then
             if Entity.IsSameTeam(j, hero) and NPC.HasState(j, Enum.ModifierState.MODIFIER_STATE_NO_HEALTH_BAR) then
                 for o,p in pairs(AutoChessHelper.Chess) do
-                    if string.find(NPC.GetUnitName(j),p) then
+                    if string.find(NPC.GetUnitName(j),o) or string.find(NPC.GetUnitName(j),p) then
+                        local name = ""
+                        if string.find(o,"npc_dota") then
+                            name = o
+                        else
+                            name = p
+                        end
                         if not temp then 
                             temp = {}
                         end
-                        if not temp[o] then
-                            temp[o] = 0
+                        if not temp[name] then
+                            temp[name] = 0
                         end
-                        if temp[o] then
+                        if temp[name] then
                             if string.find(NPC.GetUnitName(j),"11") then
-                                temp[o] = temp[o] + 9
+                                temp[name] = temp[name] + 9
                             elseif string.find(NPC.GetUnitName(j),"1") then
-                                temp[o] = temp[o] + 3
+                                temp[name] = temp[name] + 3
                             else
-                                temp[o] = temp[o] + 1
+                                temp[name] = temp[name] + 1
                             end
                         end
                     end
@@ -585,7 +593,7 @@ function AutoChessHelper.GetCountAllNPC(hero)
     return temp
 end
 
-function AutoChessHelper.FountSpotNpc(npc)
+function AutoChessHelper.FountSpotNpc(npc) -- npc юзердата нпс, ищет спот на карте, возвращает часть таблицы из AutoChessHelper.Spots
     if not npc or not NPCs.Contains(npc) then return end
     for i,j in pairs(AutoChessHelper.Spots) do
         if AutoChessHelper.ObjectInBox(j.pos1,j.pos2, Entity.GetAbsOrigin(npc)) then
@@ -594,7 +602,7 @@ function AutoChessHelper.FountSpotNpc(npc)
     end
 end
 
-function AutoChessHelper.NeedStackUnit(nameunit)
+function AutoChessHelper.NeedStackUnit(nameunit) -- nameunit МодНазваниеNPC, стакает союзные шахматы c таким названием
     if not nameunit then return end
     local npcs = NPCs.GetAll()
     for i,j in pairs(npcs) do
@@ -614,7 +622,7 @@ function AutoChessHelper.NeedStackUnit(nameunit)
     end
 end
 
-function AutoChessHelper.SimpleFindNpcHelper()
+function AutoChessHelper.SimpleFindNpcHelper() -- ищет все нпс на споте локального игрока, возвращает таблицу вида {[МодНазваниеШахматы] = количество}
     local temptable = {}
     local npcs = NPCs.GetAll()
     for i,j in pairs(npcs) do
@@ -633,7 +641,7 @@ function AutoChessHelper.SimpleFindNpcHelper()
     return temptable
 end
 
-function AutoChessHelper.FindDpsOnSec(tablenpcs,sec)
+function AutoChessHelper.FindDpsOnSec(tablenpcs,sec) -- tablenpcs таблица шахмат, sec на сколько секунд, расчитывает дпс в определенное количество секунд
     if not tablenpcs or not sec then return end
     local dpc = 0
     local hpteam = 0
@@ -646,7 +654,7 @@ function AutoChessHelper.FindDpsOnSec(tablenpcs,sec)
     return dpc,hpteam
 end
 
-function AutoChessHelper.TableNpcOnBox(pos1,pos2)
+function AutoChessHelper.TableNpcOnBox(pos1,pos2) -- Ищет нпс на определеном квадрате
     if not pos1 or not pos2 then return nil,nil end
     local mynpc = {}
     local enemynpc = {}
@@ -665,7 +673,7 @@ function AutoChessHelper.TableNpcOnBox(pos1,pos2)
     return mynpc,enemynpc
 end
 
-function AutoChessHelper.ObjectInBox(object1,object2,checkObject)
+function AutoChessHelper.ObjectInBox(object1,object2,checkObject) -- определяет находиться ли позиция внутри квадрата
     if not object1 or not object2 or not checkObject then return end
     local x1,y1 = object1:GetX(),object1:GetY()
     local x2,y2 = object2:GetX(),object2:GetY()
@@ -678,7 +686,7 @@ function AutoChessHelper.ObjectInBox(object1,object2,checkObject)
     return false
 end
 
-function AutoChessHelper.FindMyBox()
+function AutoChessHelper.FindMyBox() -- найти мой спот
     if AutoChessHelper.Spots then
         for i,j in pairs(AutoChessHelper.Spots) do
             if AutoChessHelper.ObjectInBox(j.pos1,j.pos2, Entity.GetAbsOrigin(Heroes.GetLocal())) then
