@@ -3,7 +3,7 @@ local KostyaUtils = require("KostyaUtils/Utils")
 local size_x, size_y = Renderer.GetScreenSize()
 
 
-AutoChessHelper.CurrentTranslation = Menu.AddOption({"Kostya12rus","AutoChest Helper"}, "Translation", "AutoChest Helper Translation language", 1, 2)
+AutoChessHelper.CurrentTranslation = Menu.AddOption({"Kostya12rus","AutoChest Helper"}, "Translation", "AutoChest Helper Translation language", 1,  2, 1)
 Menu.SetValueName(AutoChessHelper.CurrentTranslation, 1, 'Russian')
 Menu.SetValueName(AutoChessHelper.CurrentTranslation, 2, 'English')
 
@@ -88,7 +88,7 @@ AutoChessHelper.Translations =
 }
 
 function AutoChessHelper.GetTranslate(key)
-    local lang = Menu.GetValue(AutoChessHelper.CurrentTranslation)
+    local lang = Menu.GetValue(AutoChessHelper.CurrentTranslation)+1
     return AutoChessHelper.Translations[lang][key]
 end
 
@@ -112,8 +112,8 @@ AutoChessHelper.AutoChessWinChance    = Menu.AddOption({ "Kostya12rus", "AutoChe
 
 AutoChessHelper.AutoChessDeckBuilder  = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("deck_helper") }, AutoChessHelper.GetTranslate("deck_helper_toggle"), AutoChessHelper.GetTranslate("deck_helper_desc"))
 AutoChessHelper.AutoChessDeckblinHero = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("deck_helper") }, AutoChessHelper.GetTranslate("hero_marker"), AutoChessHelper.GetTranslate("hero_marker_deck_desc"))
-AutoChessHelper.AutoChessDeckX        = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("deck_helper") }, "X" .. AutoChessHelper.GetTranslate("print_deck_helper_on_window"), AutoChessHelper.GetTranslate("move_x_desc"), 0, size_x - 100, 20)
-AutoChessHelper.AutoChessDeckY        = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("deck_helper") }, "Y" .. AutoChessHelper.GetTranslate("print_deck_helper_on_window"), AutoChessHelper.GetTranslate("move_y_desc"), 0, size_y - 100, 20)
+AutoChessHelper.AutoChessDeckX        = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("deck_helper") }, "X" .. AutoChessHelper.GetTranslate("deck_helper_position_on_window"), AutoChessHelper.GetTranslate("move_x_desc"), 0, size_x - 100, 20)
+AutoChessHelper.AutoChessDeckY        = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("deck_helper") }, "Y" .. AutoChessHelper.GetTranslate("deck_helper_position_on_window"), AutoChessHelper.GetTranslate("move_y_desc"), 0, size_y - 100, 20)
 
 AutoChessHelper.Font      = Renderer.LoadFont("Tahoma", 23, Enum.FontWeight.EXTRABOLD)
 AutoChessHelper.Font1     = Renderer.LoadFont("Tahoma", 15, Enum.FontWeight.EXTRABOLD)
