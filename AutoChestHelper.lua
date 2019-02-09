@@ -207,6 +207,10 @@ AutoChessHelper.Builds =
     {
         ["url"]         = "https://dotachess.xyz/?build=9-36,10-13,11-12,12-0,13-49,18-4,19-43,20-27,22-44,24-32&enemy",
         ["description"] = "Orc + Hunters"
+    },
+    {
+        ["url"]         = "https://dotachess.xyz/?build=10-28,12-30,19-24,24-41,26-34,27-50,28-31,30-53,31-33&enemy",
+        ["description"] = "ASSASSIN + WARLOCK"
     }
 }
 
