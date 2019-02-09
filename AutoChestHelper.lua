@@ -154,7 +154,61 @@ AutoChessHelper.Chess =
 
 AutoChessHelper.DotaChessXYZ = JSON.Decode('[{"hero":"npc_dota_hero_axe","cost":1},{"hero":"npc_dota_hero_enchantress","cost":1},{"hero":"npc_dota_hero_ogre_magi","cost":1},{"hero":"npc_dota_hero_tusk","cost":1},{"hero":"npc_dota_hero_drow_ranger","cost":1},{"hero":"npc_dota_hero_bounty_hunter","cost":1},{"hero":"npc_dota_hero_rattletrap","cost":1},{"hero":"npc_dota_hero_shadow_shaman","cost":1},{"hero":"npc_dota_hero_batrider","cost":1},{"hero":"npc_dota_hero_tinker","cost":1},{"hero":"npc_dota_hero_antimage","cost":1},{"hero":"npc_dota_hero_crystal_maiden","cost":2},{"hero":"npc_dota_hero_beastmaster","cost":2},{"hero":"npc_dota_hero_juggernaut","cost":2},{"hero":"npc_dota_hero_shredder","cost":2},{"hero":"npc_dota_hero_queenofpain","cost":2},{"hero":"npc_dota_hero_puck","cost":2},{"hero":"npc_dota_hero_witch_doctor","cost":2},{"hero":"npc_dota_hero_slardar","cost":2},{"hero":"npc_dota_hero_chaos_knight","cost":2},{"hero":"npc_dota_hero_treant","cost":2},{"hero":"npc_dota_hero_luna","cost":2},{"hero":"npc_dota_hero_furion","cost":2},{"hero":"npc_dota_hero_lycan","cost":3},{"hero":"npc_dota_hero_venomancer","cost":3},{"hero":"npc_dota_hero_omniknight","cost":3},{"hero":"npc_dota_hero_razor","cost":3},{"hero":"npc_dota_hero_windrunner","cost":3},{"hero":"npc_dota_hero_phantom_assassin","cost":3},{"hero":"npc_dota_hero_abaddon","cost":3},{"hero":"npc_dota_hero_sand_king","cost":3},{"hero":"npc_dota_hero_slark","cost":3},{"hero":"npc_dota_hero_sniper","cost":3},{"hero":"npc_dota_hero_viper","cost":3},{"hero":"npc_dota_hero_nevermore","cost":3},{"hero":"npc_dota_hero_lina","cost":3},{"hero":"npc_dota_hero_doom_bringer","cost":4},{"hero":"npc_dota_hero_kunkka","cost":4},{"hero":"npc_dota_hero_troll_warlord","cost":4},{"hero":"npc_dota_hero_keeper_of_the_light","cost":4},{"hero":"npc_dota_hero_necrolyte","cost":4},{"hero":"npc_dota_hero_templar_assassin","cost":4},{"hero":"npc_dota_hero_alchemist","cost":4},{"hero":"npc_dota_hero_disruptor","cost":4},{"hero":"npc_dota_hero_medusa","cost":4},{"hero":"npc_dota_hero_dragon_knight","cost":4},{"hero":"npc_dota_hero_lone_druid","cost":4},{"hero":"npc_dota_hero_gyrocopter","cost":5},{"hero":"npc_dota_hero_lich","cost":5},{"hero":"npc_dota_hero_tidehunter","cost":5},{"hero":"npc_dota_hero_enigma","cost":5},{"hero":"npc_dota_hero_techies","cost":5},{"hero":"npc_dota_hero_tiny","cost":1},{"hero":"npc_dota_hero_morphling","cost":2},{"hero":"npc_dota_hero_terrorblade","cost":3}]');
 
-AutoChessHelper.Builds = JSON.Decode('[{"url":"https://dotachess.xyz/?build=17-3,20-13,24-0,26-52,27-37,28-18,29-23,30-36,31-38&enemy","description":"x9 WARRIORS"},{"url":"https://dotachess.xyz/?build=12-25,17-34,19-19,21-10,23-29,24-15,26-54,28-36,30-45&enemy","description":"Deamons + knights"},{"url":"https://dotachess.xyz/?build=16-3,17-23,18-22,19-20,20-40,24-1,25-46,26-24,27-30,28-50&enemy","description":"Druids + BEASTs"},{"url":"https://dotachess.xyz/?build=17-8,18-12,19-0,20-13,21-38,26-7,27-43,28-17&enemy","description":"Troll + orc + shamans"},{"url":"https://dotachess.xyz/?build=8-10,9-45,10-20,16-22,17-46,18-41,24-1,25-33,26-16,31-28&enemy","description":"Elf + Druid + Dragons"},{"url":"https://dotachess.xyz/?build=16-0,17-13,18-3,19-23,20-36,21-38,24-43,25-7,26-8,27-17&enemy","description":"Warriors + Trolls"},{"url":"https://dotachess.xyz/?build=16-8,17-19,18-25,19-29,20-45,24-21,25-17,26-7,27-38&enemy","description":"knights + Trolls"},{"url":"https://dotachess.xyz/?build=16-5,17-6,18-14,19-42,24-9,25-51,26-47&enemy","description":"Goblin + Mech"},{"url":"https://dotachess.xyz/?build=16-12,17-29,18-40,19-49,24-32,25-27,26-4,27-44,28-48&enemy","description":"Hunters + UNDEAD"},{"url":"https://dotachess.xyz/?build=16-5,17-30,18-41,19-40,20-29,24-15,25-28,26-31,27-4,28-48&enemy","description":"Assasins + UNDEAD"},{"url":"https://dotachess.xyz/?build=8-45,9-33,10-50,16-2,17-48,18-16,24-26,25-39,26-35&enemy","description":"Mage + Dragons"},{"url":"https://dotachess.xyz/?build=0-34,2-39,4-26,9-47,11-6,16-42,18-48,20-14,25-50,27-9&enemy","description":"Mech + Mage + Warlocks"},{"url":"https://dotachess.xyz/?build=9-36,10-13,11-12,12-0,13-49,18-4,19-43,20-27,22-44,24-32&enemy","description":"Orc + Hunters"}]');
+AutoChessHelper.Builds = 
+{
+    {
+        ["url"]         = "https://dotachess.xyz/?build=17-3,20-13,24-0,26-52,27-37,28-18,29-23,30-36,31-38&enemy",
+        ["description"] = "x9 WARRIORS"
+    },
+    {
+        ["url"]         = "https://dotachess.xyz/?build=12-25,17-34,19-19,21-10,23-29,24-15,26-54,28-36,30-45&enemy",
+        ["description"] = "Deamons + knights"
+    },
+    {
+        ["url"]         = "https://dotachess.xyz/?build=16-3,17-23,18-22,19-20,20-40,24-1,25-46,26-24,27-30,28-50&enemy",
+        ["description"] = "Druids + BEASTs"
+    },
+    {
+        ["url"]         = "https://dotachess.xyz/?build=17-8,18-12,19-0,20-13,21-38,26-7,27-43,28-17&enemy",
+        ["description"] = "Troll + orc + shamans"
+    },
+    {
+        ["url"]         = "https://dotachess.xyz/?build=8-10,9-45,10-20,16-22,17-46,18-41,24-1,25-33,26-16,31-28&enemy",
+        ["description"] = "Elf + Druid + Dragons"
+    },
+    {
+        ["url"]         = "https://dotachess.xyz/?build=16-0,17-13,18-3,19-23,20-36,21-38,24-43,25-7,26-8,27-17&enemy",
+        ["description"] = "Warriors + Trolls"
+    },
+    {
+        ["url"]         = "https://dotachess.xyz/?build=16-8,17-19,18-25,19-29,20-45,24-21,25-17,26-7,27-38&enemy",
+        ["description"] = "knights + Trolls"
+    },
+    {
+        ["url"]         = "https://dotachess.xyz/?build=16-5,17-6,18-14,19-42,24-9,25-51,26-47&enemy",
+        ["description"] = "Goblin + Mech"
+    },
+    {
+        ["url"]         = "https://dotachess.xyz/?build=16-12,17-29,18-40,19-49,24-32,25-27,26-4,27-44,28-48&enemy",
+        ["description"] = "Hunters + UNDEAD"
+    },
+    {
+        ["url"]         = "https://dotachess.xyz/?build=16-5,17-30,18-41,19-40,20-29,24-15,25-28,26-31,27-4,28-48&enemy",
+        ["description"] = "Assasins + UNDEAD"
+    },
+    {
+        ["url"]         = "https://dotachess.xyz/?build=8-45,9-33,10-50,16-2,17-48,18-16,24-26,25-39,26-35&enemy",
+        ["description"] = "Mage + Dragons"
+    },
+    {
+        ["url"]         = "https://dotachess.xyz/?build=0-34,2-39,4-26,9-47,11-6,16-42,18-48,20-14,25-50,27-9&enemy",
+        ["description"] = "Mech + Mage + Warlocks"
+    },
+    {
+        ["url"]         = "https://dotachess.xyz/?build=9-36,10-13,11-12,12-0,13-49,18-4,19-43,20-27,22-44,24-32&enemy",
+        ["description"] = "Orc + Hunters"
+    }
+}
 
 
 function AutoChessHelper.OnDraw()
