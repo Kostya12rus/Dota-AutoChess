@@ -2,31 +2,121 @@ local AutoChessHelper = {}
 local KostyaUtils = require("KostyaUtils/Utils")
 local size_x, size_y = Renderer.GetScreenSize()
 
-AutoChessHelper.TrigerActiv =        Menu.AddOption({"Kostya12rus","AutoChest Helper"}, "Enabling|Disabling Script", "")
-AutoChessHelper.AutoChessStack =     Menu.AddOption({"Kostya12rus","AutoChest Helper","Игровой помощник"}, "Помощь в стаке", "Помогает вам собрать из маленького в большого юнита")
-AutoChessHelper.AutoChessItem =      Menu.AddOption({"Kostya12rus","AutoChest Helper","Игровой помощник"}, "Подбирать вещи", "Автоматически собирает лежащие вещи")
-AutoChessHelper.AutoChessMoveToPos = Menu.AddOption({"Kostya12rus","AutoChest Helper","Игровой помощник"}, "Занимать оптимальную позицию", "курьер автоматически бежит на оптимальную позицию")
-AutoChessHelper.AutoChessblinHero =  Menu.AddOption({"Kostya12rus","AutoChest Helper","Игровой помощник"}, "Подсветка героев", "Подсвечивает героев в покупке если они уже имется на доске")
 
-AutoChessHelper.AutoChessPlayers =   Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Таблица игроков"}, "Включение/Выключение", "Создает таблицу на экране, которую можно открыть и закрыть")
-AutoChessHelper.AutoChessPlayersX =  Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Таблица игроков"}, "X позиция игроков на экране", "Перемещение панели по горизонтали", 0, size_x-100, 20)
-AutoChessHelper.AutoChessPlayersY =  Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Таблица игроков"}, "Y позиция игроков на экране", "Перемещение панели по вертикали", 0, size_y-100, 20)
-AutoChessHelper.AutoChessAllChess =  Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Рисовать таблицу шахмат"}, "Включение/Выключение", "Рисует иконками таблицу всех шахмат и их количество")
-AutoChessHelper.AutoChessAllChessX = Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Рисовать таблицу шахмат"}, "X позиция шахмат на экране", "Перемещение панели по горизонтали", 0, size_x-100, 20)
-AutoChessHelper.AutoChessAllChessY = Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Рисовать таблицу шахмат"}, "Y позиция шахмат на экране", "Перемещение панели по вертикали", 0, size_y-100, 20)
-AutoChessHelper.AutoChessAllChessS = Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник","Рисовать таблицу шахмат"}, "Размер столбца с шахматами", "Длина столбца", 0, 1000, 20)
-AutoChessHelper.AutoChessConsole =   Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник"}, "Информация в консоли", "Перед игрой пишет статистику о игроках в консоль чита")
-AutoChessHelper.AutoChessChessHero = Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник"}, "Рисовать шахматы под игроками", "Рисует иконки шахмат и их количество у каждого игрока")
-AutoChessHelper.AutoChessDrowItem =  Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник"}, "Рисовать лежащие вещи", "Рисует иконками вещи на земле")
-AutoChessHelper.AutoChessWinChance = Menu.AddOption({"Kostya12rus","AutoChest Helper","Графический помощник"}, "Показывать возможный шанс победы", "Показывает счетчит возможной победы")
+AutoChessHelper.CurrentTranslation = Menu.AddOption({"Kostya12rus","AutoChest Helper"}, "Translation", "AutoChest Helper Translation language", 1,  2, 1)
+Menu.SetValueName(AutoChessHelper.CurrentTranslation, 1, 'Russian')
+Menu.SetValueName(AutoChessHelper.CurrentTranslation, 2, 'English')
 
-AutoChessHelper.AutoChessDeckBuilder =   Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Графический помощник","Deck Builder"}, "Включение/Выключение","Создает таблицу на экране, которую можно открыть и закрыть")
-AutoChessHelper.AutoChessDeckblinHero = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Графический помощник","Deck Builder"}, "Подсветка героев из билда","Подсвечивает героев из билда в окне покупки")
-AutoChessHelper.AutoChessDeckX = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Графический помощник","Deck Builder"}, "X позиция панели билдов на экране", "Перемещение панели по горизонтали", 0, size_x-100, 20)
-AutoChessHelper.AutoChessDeckY = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Графический помощник","Deck Builder"}, "Y позиция панели билдов на экране", "Перемещение панели по вертикали", 0, size_y-100, 20)
+AutoChessHelper.Translations = 
+{
+    {
+        ["toggle"]                           = " - Включение/Выключение -",
+        ["game_helper"]                      = "Игровой помощник",
+        ["visual_helper"]                    = "Графический помощник",
+        ["print_chess_toggle"]               = " - Включение/Выключение Print Chess -",
+        ["print_chess"]                      = "Таблица шахмат",
+        ["print_chess_desc"]                 = "Рисует иконками таблицу всех шахмат и их количество",
+        ["print_chess_position_on_window"]   = "Позиция на экране Print Chess",
+        ["players_table_toggle"]             = " - Включение/Выключение Players Table - ",
+        ["players_table"]                    = "Таблица игроков",
+        ["players_table_desc"]               = "Создает таблицу игроков на экране, которую можно открыть и закрыть",
+        ["players_table_position_on_window"] = "Позиция на экране Players Table",
+        ["deck_helper_toggle"]               = " - Включение/Выключение Deck Helper -",
+        ["deck_helper"]                      = "Дек хелпер",
+        ["deck_helper_desc"]                 = "Помогает выбрать непопулярную колоду и подсвечивает героев в шопе с выбранной деки",
+        ["deck_helper_position_on_window"]   = "Позиция на экране Deck Helper",
+        ["hero_marker"]                      = "Подсветка героев в магазине",
+        ["hero_marker_desc"]                 = "Подсвечивает героев в покупке если они уже имется на доске",
+        ["hero_marker_deck_desc"]            = "Подсвечивает героев из билда в окне покупки",
+        ["stack_helping"]                    = "Помощь в стаке",
+        ["stack_helping_desc"]               = "Помогает вам собрать из маленького в большого юнита",
+        ["items_pickup"]                     = "Подбирать вещи",
+        ["items_pickup_desc"]                = "Автоматически собирает лежащие вещи",
+        ["optimal_position"]                 = "Занимать оптимальную позицию",
+        ["optimal_position_desc"]            = "Курьер автоматически бежит на оптимальную позицию",
+        ["move_x_desc"]                      = "Перемещение панели по вертикали",
+        ["move_y_desc"]                      = "Перемещение панели по горизонтали",
+        ["col_size"]                         = "Размер столбца с шахматами",
+        ["col_size_desc"]                    = "Изменяет максимальную высоту столбца",
+        ["console_info"]                     = "Информация в консоли",
+        ["console_info_desc"]                = "Перед игрой пишет статистику о игроках в консоль чита",
+        ["draw_chesses_under_players"]       = "Рисовать шахматы под игроками",
+        ["draw_chesses_under_players_desc"]  = "Рисует иконки шахмат и их количество у каждого игрока",
+        ["draw_items_in_presents"]           = "Рисовать лежащие вещи",
+        ["draw_items_in_presents_desc"]      = "Рисует иконками вещи на земле",
+        ["win_chance"]                       = "Показывать возможный шанс победы",
+        ["win_chance_desc"]                  = "Показывает счетчит возможной победы"
+    },
+    {
+        ["toggle"]                           = " - Enable/Disable Script - ",
+        ["game_helper"]                      = "Game helper",
+        ["visual_helper"]                    = "Visual helper",
+        ["print_chess_toggle"]               = " - Enable/Disable Print Chess - ",
+        ["print_chess"]                      = "Print Chess",
+        ["print_chess_desc"]                 = "Draw icons table of all chess and their count in game",
+        ["print_chess_position_on_window"]   = "Print chess position on window",
+        ["players_table_toggle"]             = " - Enable/Disable Players Table - ",
+        ["players_table"]                    = "Players Table",
+        ["players_table_desc"]               = "Creates a table of players on the screen that can be opened and closed",
+        ["players_table_position_on_window"] = "Players table position on window",
+        ["deck_helper_toggle"]               = " - Enable/Disable Deck Helper - ",
+        ["deck_helper"]                      = "Deck Helper",
+        ["deck_helper_desc"]                 = "Helps you choose an unpopular deck and mark heroes in the shop  chosen deck",
+        ["deck_helper_position_on_window"]   = "Deck helper position on window",
+        ["hero_marker"]                      = "Hero marker in shop",
+        ["hero_marker_desc"]                 = "Show heroes from the chess deck in the purchase window",
+        ["hero_marker_deck_desc"]            = "Show heroes from the choosen build in the purchase window",
+        ["stack_helping"]                    = "Help with card collect",
+        ["stack_helping_desc"]               = "Helps you collect from small to large NPC",
+        ["items_pickup"]                     = "Pick up dropped items",
+        ["items_pickup_desc"]                = "Helps to pick up items",
+        ["optimal_position"]                 = "Take the optimal position",
+        ["optimal_position_desc"]            = "Courier will automatically run at the optimal position",
+        ["move_x_desc"]                      = "Move the panel vertically",
+        ["move_y_desc"]                      = "Move the panel horizontally",
+        ["col_size"]                         = "The size of the column with chess",
+        ["col_size_desc"]                    = "The size of the column with chess",
+        ["console_info"]                     = "Console information",
+        ["console_info_desc"]                = "Before the game start writes statistics about the players in the cheat console",
+        ["draw_chesses_under_players"]       = "Draw chesses under the every player",
+        ["draw_chesses_under_players_desc"]  = "Draw chess icons and their number for each player",
+        ["draw_items_in_presents"]           = "Draw dropped items icons",
+        ["draw_items_in_presents_desc"]      = "Draw items icons under dropped items",
+        ["win_chance"]                       = "Show possible chance of winning",
+        ["win_chance_desc"]                  = "Show possible chance of winning"
+    }
+}
 
-AutoChessHelper.Font = Renderer.LoadFont("Tahoma", 23, Enum.FontWeight.EXTRABOLD)
-AutoChessHelper.Font1 = Renderer.LoadFont("Tahoma", 15, Enum.FontWeight.EXTRABOLD)
+function AutoChessHelper.GetTranslate(key)
+    local lang = Menu.GetValue(AutoChessHelper.CurrentTranslation)+1
+    return AutoChessHelper.Translations[lang][key]
+end
+
+AutoChessHelper.TrigerActiv           = Menu.AddOption({ "Kostya12rus", "AutoChest Helper" }, AutoChessHelper.GetTranslate("toggle"), "")
+AutoChessHelper.AutoChessStack        = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("game_helper") }, AutoChessHelper.GetTranslate("stack_helping"), AutoChessHelper.GetTranslate("stack_helping_desc"))
+AutoChessHelper.AutoChessItem         = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("game_helper") }, AutoChessHelper.GetTranslate("items_pickup"), AutoChessHelper.GetTranslate("items_pickup_desc"))
+AutoChessHelper.AutoChessMoveToPos    = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("game_helper") }, AutoChessHelper.GetTranslate("optimal_position"), AutoChessHelper.GetTranslate("optimal_position_desc"))
+AutoChessHelper.AutoChessblinHero     = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("game_helper") }, AutoChessHelper.GetTranslate("hero_marker"), AutoChessHelper.GetTranslate("hero_marker_desc"))
+
+AutoChessHelper.AutoChessPlayers      = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("visual_helper"), AutoChessHelper.GetTranslate("players_table") }, AutoChessHelper.GetTranslate("players_table_toggle"), AutoChessHelper.GetTranslate("players_table_desc"))
+AutoChessHelper.AutoChessPlayersX     = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("visual_helper"), AutoChessHelper.GetTranslate("players_table") }, "[X] " .. AutoChessHelper.GetTranslate("players_table_position_on_window"), AutoChessHelper.GetTranslate("move_x_desc"), 0, size_x - 100, 20)
+AutoChessHelper.AutoChessPlayersY     = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("visual_helper"), AutoChessHelper.GetTranslate("players_table") }, "[Y] " .. AutoChessHelper.GetTranslate("players_table_position_on_window"), AutoChessHelper.GetTranslate("move_y_desc"), 0, size_y - 100, 20)
+AutoChessHelper.AutoChessAllChess     = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("visual_helper"), AutoChessHelper.GetTranslate("print_chess") }, AutoChessHelper.GetTranslate("print_chess_toggle"), AutoChessHelper.GetTranslate("print_chess_desc"))
+AutoChessHelper.AutoChessAllChessX    = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("visual_helper"), AutoChessHelper.GetTranslate("print_chess") }, "[X] " .. AutoChessHelper.GetTranslate("print_chess_position_on_window"), AutoChessHelper.GetTranslate("move_x_desc"), 0, size_x - 100, 20)
+AutoChessHelper.AutoChessAllChessY    = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("visual_helper"), AutoChessHelper.GetTranslate("print_chess") }, "[Y] " .. AutoChessHelper.GetTranslate("print_chess_position_on_window"), AutoChessHelper.GetTranslate("move_y_desc"), 0, size_y - 100, 20)
+AutoChessHelper.AutoChessAllChessS    = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("visual_helper"), AutoChessHelper.GetTranslate("print_chess") }, AutoChessHelper.GetTranslate("col_size"), AutoChessHelper.GetTranslate("col_size_desc"), 0, 1000, 20)
+AutoChessHelper.AutoChessConsole      = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("visual_helper") }, AutoChessHelper.GetTranslate("console_info"), AutoChessHelper.GetTranslate("console_info_desc"))
+AutoChessHelper.AutoChessChessHero    = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("visual_helper") }, AutoChessHelper.GetTranslate("draw_chesses_under_players"), AutoChessHelper.GetTranslate("draw_chesses_under_players_desc"))
+AutoChessHelper.AutoChessDrowItem     = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("visual_helper") }, AutoChessHelper.GetTranslate("draw_items_in_presents"), AutoChessHelper.GetTranslate("draw_items_in_presents_desc"))
+AutoChessHelper.AutoChessWinChance    = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("visual_helper") }, AutoChessHelper.GetTranslate("win_chance"), AutoChessHelper.GetTranslate("win_chance_desc"))
+
+AutoChessHelper.AutoChessDeckBuilder  = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("deck_helper") }, AutoChessHelper.GetTranslate("deck_helper_toggle"), AutoChessHelper.GetTranslate("deck_helper_desc"))
+AutoChessHelper.AutoChessDeckblinHero = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("deck_helper") }, AutoChessHelper.GetTranslate("hero_marker"), AutoChessHelper.GetTranslate("hero_marker_deck_desc"))
+AutoChessHelper.AutoChessDeckX        = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("deck_helper") }, "[X] " .. AutoChessHelper.GetTranslate("deck_helper_position_on_window"), AutoChessHelper.GetTranslate("move_x_desc"), 0, size_x - 100, 20)
+AutoChessHelper.AutoChessDeckY        = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("deck_helper") }, "[Y] " .. AutoChessHelper.GetTranslate("deck_helper_position_on_window"), AutoChessHelper.GetTranslate("move_y_desc"), 0, size_y - 100, 20)
+
+AutoChessHelper.Font      = Renderer.LoadFont("Tahoma", 23, Enum.FontWeight.EXTRABOLD)
+AutoChessHelper.Font1     = Renderer.LoadFont("Tahoma", 15, Enum.FontWeight.EXTRABOLD)
 AutoChessHelper.FontChess = Renderer.LoadFont("Tahoma", 50, Enum.FontWeight.EXTRABOLD)
 
 AutoChessHelper.Spots =
@@ -720,7 +810,6 @@ function AutoChessHelper.OnEntityCreate(ent)
     end
 
     if HasItChess then
-        Console.Print(NPC.GetUnitName(ent))
         Particle.Create("particles/econ/items/dazzle/dazzle_ti6_gold/dazzle_ti6_shallow_grave_gold.vpcf",Enum.ParticleAttachment.PATTACH_POINT_FOLLOW, ent)
         Particle.Create("particles/units/heroes/hero_dazzle/dazzle_armor_friend_ring_sparks.vpcf",Enum.ParticleAttachment.PATTACH_CENTER_FOLLOW, ent)
     end
@@ -983,5 +1072,8 @@ function AutoChessHelper.round(num, numDecimalPlaces) --функция окру�
 end
 
 AutoChessHelper.init()
+
+
+
 
 return AutoChessHelper
