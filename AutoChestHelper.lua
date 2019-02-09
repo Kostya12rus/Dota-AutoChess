@@ -719,8 +719,7 @@ function AutoChessHelper.OnEntityCreate(ent)
         end
     end
 
-    if HasItChess then
-        Console.Print(NPC.GetUnitName(ent))
+    if HasItChess then*
         Particle.Create("particles/econ/items/dazzle/dazzle_ti6_gold/dazzle_ti6_shallow_grave_gold.vpcf",Enum.ParticleAttachment.PATTACH_POINT_FOLLOW, ent)
         Particle.Create("particles/units/heroes/hero_dazzle/dazzle_armor_friend_ring_sparks.vpcf",Enum.ParticleAttachment.PATTACH_CENTER_FOLLOW, ent)
     end
