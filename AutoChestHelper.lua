@@ -374,102 +374,102 @@ function AutoChessHelper.OnDraw()
             end
         end
         if HTTP.IsHostWhitelisted("101.200.189.65") then --- поиск статистики игроков
-        for _,player in pairs(Players.GetAll()) do
-            if player and Players.Contains(player) then
-                if Player.GetPlayerData(player) then
-                    if not AutoChessHelper.PlayerGametable then
-                        AutoChessHelper.PlayerGametable = {}
-                    end
-                    if not AutoChessHelper.PlayerGametable[player] then
-                        local steamids = Player.GetPlayerData(player).steamid
-                        if steamids and AutoChessHelper.Steam32id(steamids) > 0 and AutoChessHelper.Steam32id(steamids) < 9387111184 then
-                            AutoChessHelper.PlayerGametable[player] =
-                            {
-                                connect1 = HTTP.NewConnection("http://101.200.189.65:431/dac/heros/get/@" .. steamids),
-                                connect2 = HTTP.NewConnection("http://101.200.189.65:431/dac/ranking/get?player_ids=" .. steamids),
-                                rqst1 = nil,
-                                rqst2 = nil,
-                                match = nil,
-                                rank = nil,
-                                mmr = nil,
-                                needwrite = true
-                            }
+            for _,player in pairs(Players.GetAll()) do
+                if player and Players.Contains(player) then
+                    if Player.GetPlayerData(player) then
+                        if not AutoChessHelper.PlayerGametable then
+                            AutoChessHelper.PlayerGametable = {}
                         end
-                    end
-                    if AutoChessHelper.PlayerGametable[player] then
-                        if not AutoChessHelper.PlayerGametable[player].match or not AutoChessHelper.PlayerGametable[player].rank then
-                            if not AutoChessHelper.PlayerGametable[player].rqst1 or not AutoChessHelper.PlayerGametable[player].rqst1:IsValid() then
-                                AutoChessHelper.PlayerGametable[player].rqst1 = AutoChessHelper.PlayerGametable[player].connect1:AsyncRequest("GET")
+                        if not AutoChessHelper.PlayerGametable[player] then
+                            local steamids = Player.GetPlayerData(player).steamid
+                            if steamids and AutoChessHelper.Steam32id(steamids) > 0 and AutoChessHelper.Steam32id(steamids) < 9387111184 then
+                                AutoChessHelper.PlayerGametable[player] =
+                                {
+                                    connect1 = HTTP.NewConnection("http://101.200.189.65:431/dac/heros/get/@" .. steamids),
+                                    connect2 = HTTP.NewConnection("http://101.200.189.65:431/dac/ranking/get?player_ids=" .. steamids),
+                                    rqst1 = nil,
+                                    rqst2 = nil,
+                                    match = nil,
+                                    rank = nil,
+                                    mmr = nil,
+                                    needwrite = true
+                                }
                             end
-                            if  AutoChessHelper.PlayerGametable[player].rqst1
-                                    and AutoChessHelper.PlayerGametable[player].rqst1:IsValid()
-                                    and AutoChessHelper.PlayerGametable[player].rqst1:IsResolved() then
-                                local body = AutoChessHelper.PlayerGametable[player].rqst1:Get()
-                                local result = JSON.Decode(body)
-                                if string.find(body,"success") and result then
-                                    local gamest = result.user_info
-                                    if gamest then
-                                        for i,j in pairs(gamest) do
-                                            if j.match then
-                                                AutoChessHelper.PlayerGametable[player].match = j.match
-                                            else
-                                                AutoChessHelper.PlayerGametable[player].match = 0.0
-                                            end
-                                            if j.mmr_level then
-                                                AutoChessHelper.PlayerGametable[player].rank = j.mmr_level
-                                            else
-                                                AutoChessHelper.PlayerGametable[player].rank = 0.0
-                                            end
-                                        end
-                                    end
+                        end
+                        if AutoChessHelper.PlayerGametable[player] then
+                            if not AutoChessHelper.PlayerGametable[player].match or not AutoChessHelper.PlayerGametable[player].rank then
+                                if not AutoChessHelper.PlayerGametable[player].rqst1 or not AutoChessHelper.PlayerGametable[player].rqst1:IsValid() then
+                                    AutoChessHelper.PlayerGametable[player].rqst1 = AutoChessHelper.PlayerGametable[player].connect1:AsyncRequest("GET")
                                 end
-                            end
-                        end
-                        ---------------------------
-                        if not AutoChessHelper.PlayerGametable[player].mmr then
-                            if not AutoChessHelper.PlayerGametable[player].rqst2 or not AutoChessHelper.PlayerGametable[player].rqst2:IsValid() then
-                                AutoChessHelper.PlayerGametable[player].rqst2 = AutoChessHelper.PlayerGametable[player].connect2:AsyncRequest("GET")
-                            end
-                            if  AutoChessHelper.PlayerGametable[player].rqst2
-                                    and AutoChessHelper.PlayerGametable[player].rqst2:IsValid()
-                                    and AutoChessHelper.PlayerGametable[player].rqst2:IsResolved() then
-                                local body = AutoChessHelper.PlayerGametable[player].rqst2:Get()
-                                local result = JSON.Decode(body)
-                                if string.find(body,"success") and result then
-                                    local gamest = result.ranking_info
-                                    if string.len(body) < 44 then
-                                        AutoChessHelper.PlayerGametable[player].mmr = 0
-                                    else
+                                if  AutoChessHelper.PlayerGametable[player].rqst1
+                                        and AutoChessHelper.PlayerGametable[player].rqst1:IsValid()
+                                        and AutoChessHelper.PlayerGametable[player].rqst1:IsResolved() then
+                                    local body = AutoChessHelper.PlayerGametable[player].rqst1:Get()
+                                    local result = JSON.Decode(body)
+                                    if string.find(body,"success") and result then
+                                        local gamest = result.user_info
                                         if gamest then
                                             for i,j in pairs(gamest) do
-                                                if j.score then
-                                                    AutoChessHelper.PlayerGametable[player].mmr = j.score
+                                                if j.match then
+                                                    AutoChessHelper.PlayerGametable[player].match = j.match
+                                                else
+                                                    AutoChessHelper.PlayerGametable[player].match = 0.0
+                                                end
+                                                if j.mmr_level then
+                                                    AutoChessHelper.PlayerGametable[player].rank = j.mmr_level
+                                                else
+                                                    AutoChessHelper.PlayerGametable[player].rank = 0.0
                                                 end
                                             end
                                         end
                                     end
                                 end
                             end
-                        end
-                        if AutoChessHelper.PlayerGametable[player].needwrite then
-                            if AutoChessHelper.PlayerGametable[player].mmr and AutoChessHelper.PlayerGametable[player].match and AutoChessHelper.PlayerGametable[player].rank then
-                                if Menu.IsEnabled(AutoChessHelper.AutoChessConsole) then
-                                    Console.Print
-                                    (
-                                            "----[AutoChess]---- " ..
-                                                    Player.GetName(player) .." - "..
-                                                    AutoChessHelper.PlayerGametable[player].match .. " сыгранно игр, " ..
-                                                    AutoChessHelper.PlayerGametable[player].mmr .. " ммр, " ..
-                                                    AutoChessHelper.PlayerGametable[player].rank .. " ранг"
-                                    )
+                            ---------------------------
+                            if not AutoChessHelper.PlayerGametable[player].mmr then
+                                if not AutoChessHelper.PlayerGametable[player].rqst2 or not AutoChessHelper.PlayerGametable[player].rqst2:IsValid() then
+                                    AutoChessHelper.PlayerGametable[player].rqst2 = AutoChessHelper.PlayerGametable[player].connect2:AsyncRequest("GET")
                                 end
-                                AutoChessHelper.PlayerGametable[player].needwrite = false
+                                if  AutoChessHelper.PlayerGametable[player].rqst2
+                                        and AutoChessHelper.PlayerGametable[player].rqst2:IsValid()
+                                        and AutoChessHelper.PlayerGametable[player].rqst2:IsResolved() then
+                                    local body = AutoChessHelper.PlayerGametable[player].rqst2:Get()
+                                    local result = JSON.Decode(body)
+                                    if string.find(body,"success") and result then
+                                        local gamest = result.ranking_info
+                                        if string.len(body) < 44 then
+                                            AutoChessHelper.PlayerGametable[player].mmr = 0
+                                        else
+                                            if gamest then
+                                                for i,j in pairs(gamest) do
+                                                    if j.score then
+                                                        AutoChessHelper.PlayerGametable[player].mmr = j.score
+                                                    end
+                                                end
+                                            end
+                                        end
+                                    end
+                                end
+                            end
+                            if AutoChessHelper.PlayerGametable[player].needwrite then
+                                if AutoChessHelper.PlayerGametable[player].mmr and AutoChessHelper.PlayerGametable[player].match and AutoChessHelper.PlayerGametable[player].rank then
+                                    if Menu.IsEnabled(AutoChessHelper.AutoChessConsole) then
+                                        Console.Print
+                                        (
+                                                "----[AutoChess]---- " ..
+                                                        Player.GetName(player) .." - "..
+                                                        AutoChessHelper.PlayerGametable[player].match .. " сыгранно игр, " ..
+                                                        AutoChessHelper.PlayerGametable[player].mmr .. " ммр, " ..
+                                                        AutoChessHelper.PlayerGametable[player].rank .. " ранг"
+                                        )
+                                    end
+                                    AutoChessHelper.PlayerGametable[player].needwrite = false
+                                end
                             end
                         end
                     end
                 end
             end
-        end
         end
         if Heroes.GetLocal() and Menu.IsEnabled(AutoChessHelper.AutoChessPlayers) then -- таблица игроков
             local x,y = Menu.GetValue(AutoChessHelper.AutoChessPlayersX),Menu.GetValue(AutoChessHelper.AutoChessPlayersY)
@@ -915,6 +915,9 @@ function AutoChessHelper.NeedStackUnit(nameunit) -- nameunit МодНазван�
                         if skill1 and Ability.IsCastable(skill1, 0) then
                             Ability.CastTarget(skill1, j)
                         end
+                    else
+                        local skill1 = NPC.GetAbility(j, "pick_chess")
+                            Ability.CastPosition(skill1, Entity.GetAbsOrigin(AutoChessHelper.Hero))
                     end
                 end
             end
