@@ -2,121 +2,31 @@ local AutoChessHelper = {}
 local KostyaUtils = require("KostyaUtils/Utils")
 local size_x, size_y = Renderer.GetScreenSize()
 
+AutoChessHelper.TrigerActiv           = Menu.AddOption({ "Kostya12rus", "AutoChest Helper" }, " - Enable/Disable Script - ", "")
+AutoChessHelper.AutoChessStack        = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Game helper"}, "Helps with card collecting", "Helps you to collect from smaller to larger NPCs")
+AutoChessHelper.AutoChessItem         = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Game helper"}, "Pick up dropped items", "Helps to pick up items")
+AutoChessHelper.AutoChessMoveToPos    = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Game helper"}, "Take the optimal position", "Courier will automatically run at the optimal position")
+AutoChessHelper.AutoChessblinHero     = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Game helper"}, "Hero marker in shop", "Show heroes from the chess deck in the purchase window")
 
-AutoChessHelper.CurrentTranslation = Menu.AddOption({"Kostya12rus","AutoChest Helper"}, "Translation", "AutoChest Helper Translation language", 1,  2, 1)
-Menu.SetValueName(AutoChessHelper.CurrentTranslation, 1, 'Russian')
-Menu.SetValueName(AutoChessHelper.CurrentTranslation, 2, 'English')
+AutoChessHelper.AutoChessPlayers      = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Visual helper", "Players Table"}, " - Enable/Disable Players Table - ", "Creates a table of players on the screen that can be opened and closed")
+AutoChessHelper.AutoChessPlayersX     = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Visual helper", "Players Table"}, "[X] " .. "Players table position on window", "Move the panel vertically", 0, size_x - 100, 20)
+AutoChessHelper.AutoChessPlayersY     = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Visual helper", "Players Table"}, "[Y] " .. "Players table position on window", "Move the panel horizontally", 0, size_y - 100, 20)
+AutoChessHelper.AutoChessAllChess     = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Visual helper", "Print Chess"}, " - Enable/Disable Print Chess - ", "Draw icons table of all chess and their count in game")
+AutoChessHelper.AutoChessAllChessX    = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Visual helper", "Print Chess"}, "[X] " .. "Print chess position on window", "Move the panel vertically", 0, size_x - 100, 20)
+AutoChessHelper.AutoChessAllChessY    = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Visual helper", "Print Chess"}, "[Y] " .. "Print chess position on window", "Move the panel horizontally", 0, size_y - 100, 20)
+AutoChessHelper.AutoChessAllChessS    = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Visual helper", "Print Chess"}, "Chess size of the column", "Chess size of the column", 0, 1000, 20)
+AutoChessHelper.AutoChessConsole      = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Visual helper"}, "Console information", "Before the game start writes statistics about the players in the cheat console")
+AutoChessHelper.AutoChessChessHero    = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Visual helper"}, "Draw chesses under the every player", "Draw chess icons and their number for each player")
+AutoChessHelper.AutoChessDrowItem     = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Visual helper"}, "Draw dropped items icons", "Draw items icons under dropped items")
+AutoChessHelper.AutoChessWinChance    = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Visual helper"}, "Show possible chance of winning", "Show possible chance of winning")
 
-AutoChessHelper.Translations = 
-{
-    {
-        ["toggle"]                           = " - Включение/Выключение -",
-        ["game_helper"]                      = "Игровой помощник",
-        ["visual_helper"]                    = "Графический помощник",
-        ["print_chess_toggle"]               = " - Включение/Выключение Print Chess -",
-        ["print_chess"]                      = "Таблица шахмат",
-        ["print_chess_desc"]                 = "Рисует иконками таблицу всех шахмат и их количество",
-        ["print_chess_position_on_window"]   = "Позиция на экране Print Chess",
-        ["players_table_toggle"]             = " - Включение/Выключение Players Table - ",
-        ["players_table"]                    = "Таблица игроков",
-        ["players_table_desc"]               = "Создает таблицу игроков на экране, которую можно открыть и закрыть",
-        ["players_table_position_on_window"] = "Позиция на экране Players Table",
-        ["deck_helper_toggle"]               = " - Включение/Выключение Deck Helper -",
-        ["deck_helper"]                      = "Дек хелпер",
-        ["deck_helper_desc"]                 = "Помогает выбрать непопулярную колоду и подсвечивает героев в шопе с выбранной деки",
-        ["deck_helper_position_on_window"]   = "Позиция на экране Deck Helper",
-        ["hero_marker"]                      = "Подсветка героев в магазине",
-        ["hero_marker_desc"]                 = "Подсвечивает героев в покупке если они уже имется на доске",
-        ["hero_marker_deck_desc"]            = "Подсвечивает героев из билда в окне покупки",
-        ["stack_helping"]                    = "Помощь в стаке",
-        ["stack_helping_desc"]               = "Помогает вам собрать из маленького в большого юнита",
-        ["items_pickup"]                     = "Подбирать вещи",
-        ["items_pickup_desc"]                = "Автоматически собирает лежащие вещи",
-        ["optimal_position"]                 = "Занимать оптимальную позицию",
-        ["optimal_position_desc"]            = "Курьер автоматически бежит на оптимальную позицию",
-        ["move_x_desc"]                      = "Перемещение панели по вертикали",
-        ["move_y_desc"]                      = "Перемещение панели по горизонтали",
-        ["col_size"]                         = "Размер столбца с шахматами",
-        ["col_size_desc"]                    = "Изменяет максимальную высоту столбца",
-        ["console_info"]                     = "Информация в консоли",
-        ["console_info_desc"]                = "Перед игрой пишет статистику о игроках в консоль чита",
-        ["draw_chesses_under_players"]       = "Рисовать шахматы под игроками",
-        ["draw_chesses_under_players_desc"]  = "Рисует иконки шахмат и их количество у каждого игрока",
-        ["draw_items_in_presents"]           = "Рисовать лежащие вещи",
-        ["draw_items_in_presents_desc"]      = "Рисует иконками вещи на земле",
-        ["win_chance"]                       = "Показывать возможный шанс победы",
-        ["win_chance_desc"]                  = "Показывает счетчит возможной победы"
-    },
-    {
-        ["toggle"]                           = " - Enable/Disable Script - ",
-        ["game_helper"]                      = "Game helper",
-        ["visual_helper"]                    = "Visual helper",
-        ["print_chess_toggle"]               = " - Enable/Disable Print Chess - ",
-        ["print_chess"]                      = "Print Chess",
-        ["print_chess_desc"]                 = "Draw icons table of all chess and their count in game",
-        ["print_chess_position_on_window"]   = "Print chess position on window",
-        ["players_table_toggle"]             = " - Enable/Disable Players Table - ",
-        ["players_table"]                    = "Players Table",
-        ["players_table_desc"]               = "Creates a table of players on the screen that can be opened and closed",
-        ["players_table_position_on_window"] = "Players table position on window",
-        ["deck_helper_toggle"]               = " - Enable/Disable Deck Helper - ",
-        ["deck_helper"]                      = "Deck Helper",
-        ["deck_helper_desc"]                 = "Helps you to choose an unpopular deck and mark heroes in the shop of that specific deck",
-        ["deck_helper_position_on_window"]   = "Deck helper position on window",
-        ["hero_marker"]                      = "Hero marker in shop",
-        ["hero_marker_desc"]                 = "Show heroes from the chess deck in the purchase window",
-        ["hero_marker_deck_desc"]            = "Show heroes from the chosen build in the purchase window",
-        ["stack_helping"]                    = "Helps with card collecting",
-        ["stack_helping_desc"]               = "Helps you to collect from smaller to larger NPCs",
-        ["items_pickup"]                     = "Pick up dropped items",
-        ["items_pickup_desc"]                = "Helps to pick up items",
-        ["optimal_position"]                 = "Take the optimal position",
-        ["optimal_position_desc"]            = "Courier will automatically run at the optimal position",
-        ["move_x_desc"]                      = "Move the panel vertically",
-        ["move_y_desc"]                      = "Move the panel horizontally",
-        ["col_size"]                         = "Chess size of the column",
-        ["col_size_desc"]                    = "Chess size of the column",
-        ["console_info"]                     = "Console information",
-        ["console_info_desc"]                = "Before the game start writes statistics about the players in the cheat console",
-        ["draw_chesses_under_players"]       = "Draw chesses under the every player",
-        ["draw_chesses_under_players_desc"]  = "Draw chess icons and their number for each player",
-        ["draw_items_in_presents"]           = "Draw dropped items icons",
-        ["draw_items_in_presents_desc"]      = "Draw items icons under dropped items",
-        ["win_chance"]                       = "Show possible chance of winning",
-        ["win_chance_desc"]                  = "Show possible chance of winning"
-    }
-}
+AutoChessHelper.AutoChessDeckBuilder  = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Deck Helper"}, " - Enable/Disable Deck Helper - ", "Helps you to choose an unpopular deck and mark heroes in the shop of that specific deck")
+AutoChessHelper.AutoChessDeckblinHero = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Deck Helper"}, "Hero marker in shop", "Show heroes from the chosen build in the purchase window")
+AutoChessHelper.AutoChessDeckX        = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Deck Helper"}, "[X] " .. "Deck helper position on window", "Move the panel vertically", 0, size_x - 100, 20)
+AutoChessHelper.AutoChessDeckY        = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Deck Helper"}, "[Y] " .. "Deck helper position on window", "Move the panel horizontally", 0, size_y - 100, 20)
 
-function AutoChessHelper.GetTranslate(key)
-    local lang = Menu.GetValue(AutoChessHelper.CurrentTranslation)+1
-    return AutoChessHelper.Translations[lang][key]
-end
-
-AutoChessHelper.TrigerActiv           = Menu.AddOption({ "Kostya12rus", "AutoChest Helper" }, AutoChessHelper.GetTranslate("toggle"), "")
-AutoChessHelper.AutoChessStack        = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("game_helper") }, AutoChessHelper.GetTranslate("stack_helping"), AutoChessHelper.GetTranslate("stack_helping_desc"))
-AutoChessHelper.AutoChessItem         = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("game_helper") }, AutoChessHelper.GetTranslate("items_pickup"), AutoChessHelper.GetTranslate("items_pickup_desc"))
-AutoChessHelper.AutoChessMoveToPos    = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("game_helper") }, AutoChessHelper.GetTranslate("optimal_position"), AutoChessHelper.GetTranslate("optimal_position_desc"))
-AutoChessHelper.AutoChessblinHero     = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("game_helper") }, AutoChessHelper.GetTranslate("hero_marker"), AutoChessHelper.GetTranslate("hero_marker_desc"))
-
-AutoChessHelper.AutoChessPlayers      = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("visual_helper"), AutoChessHelper.GetTranslate("players_table") }, AutoChessHelper.GetTranslate("players_table_toggle"), AutoChessHelper.GetTranslate("players_table_desc"))
-AutoChessHelper.AutoChessPlayersX     = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("visual_helper"), AutoChessHelper.GetTranslate("players_table") }, "[X] " .. AutoChessHelper.GetTranslate("players_table_position_on_window"), AutoChessHelper.GetTranslate("move_x_desc"), 0, size_x - 100, 20)
-AutoChessHelper.AutoChessPlayersY     = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("visual_helper"), AutoChessHelper.GetTranslate("players_table") }, "[Y] " .. AutoChessHelper.GetTranslate("players_table_position_on_window"), AutoChessHelper.GetTranslate("move_y_desc"), 0, size_y - 100, 20)
-AutoChessHelper.AutoChessAllChess     = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("visual_helper"), AutoChessHelper.GetTranslate("print_chess") }, AutoChessHelper.GetTranslate("print_chess_toggle"), AutoChessHelper.GetTranslate("print_chess_desc"))
-AutoChessHelper.AutoChessAllChessX    = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("visual_helper"), AutoChessHelper.GetTranslate("print_chess") }, "[X] " .. AutoChessHelper.GetTranslate("print_chess_position_on_window"), AutoChessHelper.GetTranslate("move_x_desc"), 0, size_x - 100, 20)
-AutoChessHelper.AutoChessAllChessY    = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("visual_helper"), AutoChessHelper.GetTranslate("print_chess") }, "[Y] " .. AutoChessHelper.GetTranslate("print_chess_position_on_window"), AutoChessHelper.GetTranslate("move_y_desc"), 0, size_y - 100, 20)
-AutoChessHelper.AutoChessAllChessS    = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("visual_helper"), AutoChessHelper.GetTranslate("print_chess") }, AutoChessHelper.GetTranslate("col_size"), AutoChessHelper.GetTranslate("col_size_desc"), 0, 1000, 20)
-AutoChessHelper.AutoChessConsole      = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("visual_helper") }, AutoChessHelper.GetTranslate("console_info"), AutoChessHelper.GetTranslate("console_info_desc"))
-AutoChessHelper.AutoChessChessHero    = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("visual_helper") }, AutoChessHelper.GetTranslate("draw_chesses_under_players"), AutoChessHelper.GetTranslate("draw_chesses_under_players_desc"))
-AutoChessHelper.AutoChessDrowItem     = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("visual_helper") }, AutoChessHelper.GetTranslate("draw_items_in_presents"), AutoChessHelper.GetTranslate("draw_items_in_presents_desc"))
-AutoChessHelper.AutoChessWinChance    = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("visual_helper") }, AutoChessHelper.GetTranslate("win_chance"), AutoChessHelper.GetTranslate("win_chance_desc"))
-
-AutoChessHelper.AutoChessDeckBuilder  = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("deck_helper") }, AutoChessHelper.GetTranslate("deck_helper_toggle"), AutoChessHelper.GetTranslate("deck_helper_desc"))
-AutoChessHelper.AutoChessDeckblinHero = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("deck_helper") }, AutoChessHelper.GetTranslate("hero_marker"), AutoChessHelper.GetTranslate("hero_marker_deck_desc"))
-AutoChessHelper.AutoChessDeckX        = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("deck_helper") }, "[X] " .. AutoChessHelper.GetTranslate("deck_helper_position_on_window"), AutoChessHelper.GetTranslate("move_x_desc"), 0, size_x - 100, 20)
-AutoChessHelper.AutoChessDeckY        = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", AutoChessHelper.GetTranslate("deck_helper") }, "[Y] " .. AutoChessHelper.GetTranslate("deck_helper_position_on_window"), AutoChessHelper.GetTranslate("move_y_desc"), 0, size_y - 100, 20)
-
-AutoChessHelper.Font      = Renderer.LoadFont("Tahoma", 23, Enum.FontWeight.EXTRABOLD)
-AutoChessHelper.Font1     = Renderer.LoadFont("Tahoma", 15, Enum.FontWeight.EXTRABOLD)
+AutoChessHelper.Font = Renderer.LoadFont("Tahoma", 23, Enum.FontWeight.EXTRABOLD)
+AutoChessHelper.Font1 = Renderer.LoadFont("Tahoma", 15, Enum.FontWeight.EXTRABOLD)
 AutoChessHelper.FontChess = Renderer.LoadFont("Tahoma", 50, Enum.FontWeight.EXTRABOLD)
 
 AutoChessHelper.Spots =
@@ -374,102 +284,102 @@ function AutoChessHelper.OnDraw()
             end
         end
         if HTTP.IsHostWhitelisted("101.200.189.65") then --- поиск статистики игроков
-            for _,player in pairs(Players.GetAll()) do
-                if player and Players.Contains(player) then
-                    if Player.GetPlayerData(player) then
-                        if not AutoChessHelper.PlayerGametable then
-                            AutoChessHelper.PlayerGametable = {}
+        for _,player in pairs(Players.GetAll()) do
+            if player and Players.Contains(player) then
+                if Player.GetPlayerData(player) then
+                    if not AutoChessHelper.PlayerGametable then
+                        AutoChessHelper.PlayerGametable = {}
+                    end
+                    if not AutoChessHelper.PlayerGametable[player] then
+                        local steamids = Player.GetPlayerData(player).steamid
+                        if steamids and AutoChessHelper.Steam32id(steamids) > 0 and AutoChessHelper.Steam32id(steamids) < 9387111184 then
+                            AutoChessHelper.PlayerGametable[player] =
+                            {
+                                connect1 = HTTP.NewConnection("http://101.200.189.65:431/dac/heros/get/@" .. steamids),
+                                connect2 = HTTP.NewConnection("http://101.200.189.65:431/dac/ranking/get?player_ids=" .. steamids),
+                                rqst1 = nil,
+                                rqst2 = nil,
+                                match = nil,
+                                rank = nil,
+                                mmr = nil,
+                                needwrite = true
+                            }
                         end
-                        if not AutoChessHelper.PlayerGametable[player] then
-                            local steamids = Player.GetPlayerData(player).steamid
-                            if steamids and AutoChessHelper.Steam32id(steamids) > 0 and AutoChessHelper.Steam32id(steamids) < 9387111184 then
-                                AutoChessHelper.PlayerGametable[player] =
-                                {
-                                    connect1 = HTTP.NewConnection("http://101.200.189.65:431/dac/heros/get/@" .. steamids),
-                                    connect2 = HTTP.NewConnection("http://101.200.189.65:431/dac/ranking/get?player_ids=" .. steamids),
-                                    rqst1 = nil,
-                                    rqst2 = nil,
-                                    match = nil,
-                                    rank = nil,
-                                    mmr = nil,
-                                    needwrite = true
-                                }
+                    end
+                    if AutoChessHelper.PlayerGametable[player] then
+                        if not AutoChessHelper.PlayerGametable[player].match or not AutoChessHelper.PlayerGametable[player].rank then
+                            if not AutoChessHelper.PlayerGametable[player].rqst1 or not AutoChessHelper.PlayerGametable[player].rqst1:IsValid() then
+                                AutoChessHelper.PlayerGametable[player].rqst1 = AutoChessHelper.PlayerGametable[player].connect1:AsyncRequest("GET")
+                            end
+                            if  AutoChessHelper.PlayerGametable[player].rqst1
+                                    and AutoChessHelper.PlayerGametable[player].rqst1:IsValid()
+                                    and AutoChessHelper.PlayerGametable[player].rqst1:IsResolved() then
+                                local body = AutoChessHelper.PlayerGametable[player].rqst1:Get()
+                                local result = JSON.Decode(body)
+                                if string.find(body,"success") and result then
+                                    local gamest = result.user_info
+                                    if gamest then
+                                        for i,j in pairs(gamest) do
+                                            if j.match then
+                                                AutoChessHelper.PlayerGametable[player].match = j.match
+                                            else
+                                                AutoChessHelper.PlayerGametable[player].match = 0.0
+                                            end
+                                            if j.mmr_level then
+                                                AutoChessHelper.PlayerGametable[player].rank = j.mmr_level
+                                            else
+                                                AutoChessHelper.PlayerGametable[player].rank = 0.0
+                                            end
+                                        end
+                                    end
+                                end
                             end
                         end
-                        if AutoChessHelper.PlayerGametable[player] then
-                            if not AutoChessHelper.PlayerGametable[player].match or not AutoChessHelper.PlayerGametable[player].rank then
-                                if not AutoChessHelper.PlayerGametable[player].rqst1 or not AutoChessHelper.PlayerGametable[player].rqst1:IsValid() then
-                                    AutoChessHelper.PlayerGametable[player].rqst1 = AutoChessHelper.PlayerGametable[player].connect1:AsyncRequest("GET")
-                                end
-                                if  AutoChessHelper.PlayerGametable[player].rqst1
-                                        and AutoChessHelper.PlayerGametable[player].rqst1:IsValid()
-                                        and AutoChessHelper.PlayerGametable[player].rqst1:IsResolved() then
-                                    local body = AutoChessHelper.PlayerGametable[player].rqst1:Get()
-                                    local result = JSON.Decode(body)
-                                    if string.find(body,"success") and result then
-                                        local gamest = result.user_info
+                        ---------------------------
+                        if not AutoChessHelper.PlayerGametable[player].mmr then
+                            if not AutoChessHelper.PlayerGametable[player].rqst2 or not AutoChessHelper.PlayerGametable[player].rqst2:IsValid() then
+                                AutoChessHelper.PlayerGametable[player].rqst2 = AutoChessHelper.PlayerGametable[player].connect2:AsyncRequest("GET")
+                            end
+                            if  AutoChessHelper.PlayerGametable[player].rqst2
+                                    and AutoChessHelper.PlayerGametable[player].rqst2:IsValid()
+                                    and AutoChessHelper.PlayerGametable[player].rqst2:IsResolved() then
+                                local body = AutoChessHelper.PlayerGametable[player].rqst2:Get()
+                                local result = JSON.Decode(body)
+                                if string.find(body,"success") and result then
+                                    local gamest = result.ranking_info
+                                    if string.len(body) < 44 then
+                                        AutoChessHelper.PlayerGametable[player].mmr = 0
+                                    else
                                         if gamest then
                                             for i,j in pairs(gamest) do
-                                                if j.match then
-                                                    AutoChessHelper.PlayerGametable[player].match = j.match
-                                                else
-                                                    AutoChessHelper.PlayerGametable[player].match = 0.0
-                                                end
-                                                if j.mmr_level then
-                                                    AutoChessHelper.PlayerGametable[player].rank = j.mmr_level
-                                                else
-                                                    AutoChessHelper.PlayerGametable[player].rank = 0.0
+                                                if j.score then
+                                                    AutoChessHelper.PlayerGametable[player].mmr = j.score
                                                 end
                                             end
                                         end
                                     end
                                 end
                             end
-                            ---------------------------
-                            if not AutoChessHelper.PlayerGametable[player].mmr then
-                                if not AutoChessHelper.PlayerGametable[player].rqst2 or not AutoChessHelper.PlayerGametable[player].rqst2:IsValid() then
-                                    AutoChessHelper.PlayerGametable[player].rqst2 = AutoChessHelper.PlayerGametable[player].connect2:AsyncRequest("GET")
+                        end
+                        if AutoChessHelper.PlayerGametable[player].needwrite then
+                            if AutoChessHelper.PlayerGametable[player].mmr and AutoChessHelper.PlayerGametable[player].match and AutoChessHelper.PlayerGametable[player].rank then
+                                if Menu.IsEnabled(AutoChessHelper.AutoChessConsole) then
+                                    Console.Print
+                                    (
+                                            "----[AutoChess]---- " ..
+                                                    Player.GetName(player) .." - "..
+                                                    AutoChessHelper.PlayerGametable[player].match .. " games, " ..
+                                                    AutoChessHelper.PlayerGametable[player].mmr .. " mmr, " ..
+                                                    AutoChessHelper.PlayerGametable[player].rank .. " rank"
+                                    )
                                 end
-                                if  AutoChessHelper.PlayerGametable[player].rqst2
-                                        and AutoChessHelper.PlayerGametable[player].rqst2:IsValid()
-                                        and AutoChessHelper.PlayerGametable[player].rqst2:IsResolved() then
-                                    local body = AutoChessHelper.PlayerGametable[player].rqst2:Get()
-                                    local result = JSON.Decode(body)
-                                    if string.find(body,"success") and result then
-                                        local gamest = result.ranking_info
-                                        if string.len(body) < 44 then
-                                            AutoChessHelper.PlayerGametable[player].mmr = 0
-                                        else
-                                            if gamest then
-                                                for i,j in pairs(gamest) do
-                                                    if j.score then
-                                                        AutoChessHelper.PlayerGametable[player].mmr = j.score
-                                                    end
-                                                end
-                                            end
-                                        end
-                                    end
-                                end
-                            end
-                            if AutoChessHelper.PlayerGametable[player].needwrite then
-                                if AutoChessHelper.PlayerGametable[player].mmr and AutoChessHelper.PlayerGametable[player].match and AutoChessHelper.PlayerGametable[player].rank then
-                                    if Menu.IsEnabled(AutoChessHelper.AutoChessConsole) then
-                                        Console.Print
-                                        (
-                                                "----[AutoChess]---- " ..
-                                                        Player.GetName(player) .." - "..
-                                                        AutoChessHelper.PlayerGametable[player].match .. " сыгранно игр, " ..
-                                                        AutoChessHelper.PlayerGametable[player].mmr .. " ммр, " ..
-                                                        AutoChessHelper.PlayerGametable[player].rank .. " ранг"
-                                        )
-                                    end
-                                    AutoChessHelper.PlayerGametable[player].needwrite = false
-                                end
+                                AutoChessHelper.PlayerGametable[player].needwrite = false
                             end
                         end
                     end
                 end
             end
+        end
         end
         if Heroes.GetLocal() and Menu.IsEnabled(AutoChessHelper.AutoChessPlayers) then -- таблица игроков
             local x,y = Menu.GetValue(AutoChessHelper.AutoChessPlayersX),Menu.GetValue(AutoChessHelper.AutoChessPlayersY)
@@ -597,7 +507,7 @@ function AutoChessHelper.OnDraw()
     if AutoChessHelper.StackDraw then -- писать о стаке на экране
         local size_x, size_y = Renderer.GetScreenSize()
         size_x, size_y = size_x * 0.5, size_y * 0.4
-        Renderer.DrawTextCentered(AutoChessHelper.Font, size_x, size_y, "Можно создать большого юнита нажмите левую кнопку мыши", 1)
+        Renderer.DrawTextCentered(AutoChessHelper.Font, size_x, size_y, "You can create a large unit by clicking the left mouse button", 1)
     end
 
     if Menu.IsEnabled(AutoChessHelper.AutoChessDeckBuilder) then -- DeckBuilder
@@ -786,9 +696,7 @@ function AutoChessHelper.OnEntityCreate(ent)
     if not ent or not Entity.IsNPC(ent) or not NPC.GetUnitName(ent) then return end
     local HasItChess = false
     if Menu.IsEnabled(AutoChessHelper.AutoChessDeckBuilder) and Menu.IsEnabled(AutoChessHelper.AutoChessDeckblinHero) then  -- если включена опция подсветки героя из билда
-
         local heroname = NPC.GetUnitName(ent)
-
         if AutoChessHelper.ChoosenBuild then
             for i, value in ipairs(AutoChessHelper.DotaChessXYZ) do
                 if value.hero == heroname then
@@ -915,9 +823,6 @@ function AutoChessHelper.NeedStackUnit(nameunit) -- nameunit МодНазван�
                         if skill1 and Ability.IsCastable(skill1, 0) then
                             Ability.CastTarget(skill1, j)
                         end
-                    else
-                        local skill1 = NPC.GetAbility(j, "pick_chess")
-                            Ability.CastPosition(skill1, Entity.GetAbsOrigin(AutoChessHelper.Hero))
                     end
                 end
             end
@@ -1075,8 +980,5 @@ function AutoChessHelper.round(num, numDecimalPlaces) --функция окру�
 end
 
 AutoChessHelper.init()
-
-
-
 
 return AutoChessHelper
