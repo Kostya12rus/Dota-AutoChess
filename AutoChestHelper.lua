@@ -332,6 +332,9 @@ function AutoChessHelper.OnDraw()
                                             end
                                         end
                                     end
+                                else
+                                    AutoChessHelper.PlayerGametable[player].match = 0.0
+                                    AutoChessHelper.PlayerGametable[player].rank = 0.0
                                 end
                             end
                         end
@@ -358,6 +361,8 @@ function AutoChessHelper.OnDraw()
                                             end
                                         end
                                     end
+                                else
+                                    AutoChessHelper.PlayerGametable[player].mmr = 0
                                 end
                             end
                         end
