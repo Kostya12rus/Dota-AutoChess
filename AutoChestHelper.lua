@@ -211,6 +211,14 @@ AutoChessHelper.Builds =
     {
         ["url"]         = "https://dotachess.xyz/?build=10-28,12-30,19-24,24-41,26-34,27-50,28-31,30-53,31-33&enemy",
         ["description"] = "ASSASSIN + WARLOCK"
+    },
+    {
+        ["url"]         = "https://dotachess.xyz/?build=17-25,18-19,19-12,20-42,21-49,25-21,26-4,27-40,28-17,29-8&enemy",
+        ["description"] = "KNIGHT + HUNTER + WARLOCK (V1)"
+    },
+    {
+        ["url"]         = "https://dotachess.xyz/?build=17-25,18-29,19-12,20-42,21-49,25-21,26-4,27-34,28-17,29-8&enemy",
+        ["description"] = "KNIGHT + HUNTER + WARLOCK (V2)"
     }
 }
 
