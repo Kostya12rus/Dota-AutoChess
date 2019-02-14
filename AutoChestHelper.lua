@@ -758,6 +758,9 @@ function AutoChessHelper.GetCountAllNPC(hero) -- hero юзердата геро�
     local npcs = NPCs.GetAll()
     local tableposnpc = AutoChessHelper.FountSpotNpc(hero)
     for i,j in pairs(npcs) do
+        if j and NPCs.Contains(j) and Entity.GetTeamNum(j) == 4 and not NPC.HasState(j, Enum.ModifierState.MODIFIER_STATE_NO_HEALTH_BAR) then
+            return nil
+        end
         if j and NPCs.Contains(j) and NPC.IsCreep(j) and Entity.IsSameTeam(j, hero) and AutoChessHelper.ObjectInBox(tableposnpc.pos1,tableposnpc.pos2,Entity.GetAbsOrigin(j)) then
             if NPC.HasState(j, Enum.ModifierState.MODIFIER_STATE_NO_HEALTH_BAR) and Entity.IsAlive(j) then
                 for o,p in pairs(AutoChessHelper.Chess) do
