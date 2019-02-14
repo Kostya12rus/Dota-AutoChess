@@ -758,38 +758,34 @@ function AutoChessHelper.GetCountAllNPC(hero) -- hero юзердата геро�
     local npcs = NPCs.GetAll()
     local tableposnpc = AutoChessHelper.FountSpotNpc(hero)
     for i,j in pairs(npcs) do
-        if j and NPCs.Contains(j) and Entity.GetTeamNum(j) == 4 and not NPC.HasState(j, Enum.ModifierState.MODIFIER_STATE_NO_HEALTH_BAR) then
+        if j and NPCs.Contains(j) and NPC.IsCreep(j) and Entity.GetTeamNum(j) == 4 and not NPC.HasState(j, Enum.ModifierState.MODIFIER_STATE_NO_HEALTH_BAR) then
             return nil
         end
-        if j and NPCs.Contains(j) and NPC.IsCreep(j) and Entity.IsSameTeam(j, hero) and AutoChessHelper.ObjectInBox(tableposnpc.pos1,tableposnpc.pos2,Entity.GetAbsOrigin(j)) then
-            if NPC.HasState(j, Enum.ModifierState.MODIFIER_STATE_NO_HEALTH_BAR) and Entity.IsAlive(j) then
-                for o,p in pairs(AutoChessHelper.Chess) do
-                    if string.find(NPC.GetUnitName(j),o) or string.find(NPC.GetUnitName(j),p) then
-                        local name = ""
-                        if string.find(o,"npc_dota") then
-                            name = o
+        if j and NPCs.Contains(j) and NPC.IsCreep(j) and Entity.IsAlive(j) and Entity.IsSameTeam(j, hero) and AutoChessHelper.ObjectInBox(tableposnpc.pos1,tableposnpc.pos2,Entity.GetAbsOrigin(j)) then
+            for o,p in pairs(AutoChessHelper.Chess) do
+                if string.find(NPC.GetUnitName(j),o) or string.find(NPC.GetUnitName(j),p) then
+                    local name = ""
+                    if string.find(o,"npc_dota") then
+                        name = o
+                    else
+                        name = p
+                    end
+                    if not temp then
+                        temp = {}
+                    end
+                    if not temp[name] then
+                        temp[name] = 0
+                    end
+                    if temp[name] then
+                        if string.find(NPC.GetUnitName(j),"11") then
+                            temp[name] = temp[name] + 9
+                        elseif string.find(NPC.GetUnitName(j),"1") then
+                            temp[name] = temp[name] + 3
                         else
-                            name = p
-                        end
-                        if not temp then
-                            temp = {}
-                        end
-                        if not temp[name] then
-                            temp[name] = 0
-                        end
-                        if temp[name] then
-                            if string.find(NPC.GetUnitName(j),"11") then
-                                temp[name] = temp[name] + 9
-                            elseif string.find(NPC.GetUnitName(j),"1") then
-                                temp[name] = temp[name] + 3
-                            else
-                                temp[name] = temp[name] + 1
-                            end
+                            temp[name] = temp[name] + 1
                         end
                     end
                 end
-            else
-                return nil
             end
         end
     end
