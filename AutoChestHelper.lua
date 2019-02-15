@@ -21,6 +21,7 @@ AutoChessHelper.AutoChessDrowItem     = Menu.AddOption({ "Kostya12rus", "AutoChe
 AutoChessHelper.AutoChessWinChance    = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Visual helper"}, "Show possible chance of winning", "Show possible chance of winning")
 
 AutoChessHelper.AutoChessDeckBuilder  = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Deck Helper"}, " - Enable/Disable Deck Helper - ", "Helps you to choose an unpopular deck and mark heroes in the shop of that specific deck")
+AutoChessHelper.AutoChessDeckCumpute  = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Deck Helper"}, "Disable computing unpopular deck", "Enable sorting decks. If ON - decks will not be sorted by unpopularity!")
 AutoChessHelper.AutoChessDeckblinHero = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Deck Helper"}, "Hero marker in shop", "Show heroes from the chosen build in the purchase window")
 AutoChessHelper.AutoChessDeckX        = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Deck Helper"}, "[X] " .. "Deck helper position on window", "Move the panel vertically", 0, size_x - 100, 20)
 AutoChessHelper.AutoChessDeckY        = Menu.AddOption({ "Kostya12rus", "AutoChest Helper", "Deck Helper"}, "[Y] " .. "Deck helper position on window", "Move the panel horizontally", 0, size_y - 100, 20)
@@ -496,7 +497,7 @@ function AutoChessHelper.OnDraw()
         Renderer.DrawTextCentered(AutoChessHelper.Font, size_x, size_y, "You can create a large unit by clicking the left mouse button", 1)
     end
 
-    if Menu.IsEnabled(AutoChessHelper.AutoChessDeckBuilder) then -- DeckBuilder
+    if Menu.IsEnabled(AutoChessHelper.AutoChessDeckBuilder) then -- DeckBuilder искать непопулярную сортировку
 
         local x, y =  Menu.GetValue(AutoChessHelper.AutoChessDeckX),  Menu.GetValue(AutoChessHelper.AutoChessDeckY)
         local padding_x, padding_y = 6, 5
@@ -504,83 +505,166 @@ function AutoChessHelper.OnDraw()
         local boardmatrix_x, boardmatrix_y = 8, 4
 
         local pred_x, pred_y, pred_r = x-50, y-40, 30
+		local pred_pol_r =  pred_r/2
+		local pred_toggler_y =  pred_y - 15
+		local pred_toggler_height = 10
+		
+		local numofrows = 12
+		local row_y = pred_y + 35
 
-        if not AutoChessHelper.NeedPrediction then
-            Renderer.DrawText(AutoChessHelper.FontChess, pred_x, pred_y - 18, "⟳")
-            if Input.IsCursorInRect(pred_x, pred_y, pred_r, pred_r) and Input.IsKeyDownOnce(Enum.ButtonCode.MOUSE_LEFT) then
-                AutoChessHelper.NeedPrediction = true
-            end
-        end
+		local pag_x = pred_x - 2
+		local pag_up_y = row_y - 16
+		local pag_down_y = row_y + (numofrows * 12) + 4
 
-        local numofrows = 12
-        local row_y = pred_y + 35
+		do --отображение переключателя "Disable computing unpopular deck"
+			if Input.IsCursorInRect(pred_x, pred_toggler_y, pred_pol_r, pred_toggler_height) and Input.IsKeyDownOnce(Enum.ButtonCode.MOUSE_LEFT) then
+				Menu.SetValue(AutoChessHelper.AutoChessDeckCumpute, 1, true)
+			elseif Input.IsCursorInRect(pred_x + pred_pol_r, pred_toggler_y, pred_pol_r, pred_toggler_height) and Input.IsKeyDownOnce(Enum.ButtonCode.MOUSE_LEFT) then
+				Menu.SetValue(AutoChessHelper.AutoChessDeckCumpute, 0, true)
+			end
 
-        if AutoChessHelper.buildUniques then
-            if Input.IsCursorInRect(pred_x - 4, row_y, 50, 12 * numofrows) and Input.IsKeyDownOnce(Enum.ButtonCode.MOUSE_LEFT) then
-                for buildn = 0, numofrows do
-                    if Input.IsCursorInRect(pred_x - 4, row_y + (buildn * 12), 50, 12) then
-                        Console.RunCommand(string.format("ach.choose_build %s", AutoChessHelper.buildUniques[buildn + 1][1]))
-                    end
-                end
-            end
-        end
+			if Menu.IsEnabled(AutoChessHelper.AutoChessDeckCumpute) then
+				Renderer.SetDrawColor(0, 255, 0, 200)
+				Renderer.DrawFilledRect(pred_x, pred_toggler_y, pred_pol_r, pred_toggler_height)
+				Renderer.SetDrawColor(255, 0, 0, 60)
+				Renderer.DrawFilledRect(pred_x + pred_pol_r, pred_toggler_y, pred_pol_r, pred_toggler_height)
+			else
+				Renderer.SetDrawColor(255, 0, 0, 60)
+				Renderer.DrawFilledRect(pred_x, pred_toggler_y, pred_pol_r, pred_toggler_height)
+				Renderer.SetDrawColor(0, 255, 0, 200)
+				Renderer.DrawFilledRect(pred_x + pred_pol_r, pred_toggler_y, pred_pol_r, pred_toggler_height)
+			end
 
-        if AutoChessHelper.buildUniques then
-            Renderer.SetDrawColor(185, 214, 124, 255)
-            local itemsdrowes = 0
+			Renderer.SetDrawColor(255, 255, 255, 255)
+		end
+		
+		if not Menu.IsEnabled(AutoChessHelper.AutoChessDeckCumpute) then
+			if not AutoChessHelper.NeedPrediction then
+				Renderer.DrawText(AutoChessHelper.FontChess, pred_x, pred_y - 18, "⟳")
+				if Input.IsCursorInRect(pred_x, pred_y, pred_r, pred_r) and Input.IsKeyDownOnce(Enum.ButtonCode.MOUSE_LEFT) then
+					AutoChessHelper.NeedPrediction = true
+				end
+			end
+			
+			if AutoChessHelper.buildUniques then
+				if Input.IsCursorInRect(pred_x - 4, row_y, 50, 12 * numofrows) and Input.IsKeyDownOnce(Enum.ButtonCode.MOUSE_LEFT) then
+					for buildn = 0, numofrows do
+						if Input.IsCursorInRect(pred_x - 4, row_y + (buildn * 12), 50, 12) then
+							Console.RunCommand(string.format("ach.choose_build %s", AutoChessHelper.buildUniques[buildn + 1][1]))
+						end
+					end
+				end
 
-            local colorstep = 255 / numofrows
-            for n, m in pairs(AutoChessHelper.buildUniques) do
-                Renderer.SetDrawColor(math.floor(colorstep * itemsdrowes), 255 - (itemsdrowes * 12), itemsdrowes, 255)
-                Renderer.DrawText(AutoChessHelper.Font1, pred_x - 4, row_y, string.format("%2.2d - %s", m[1], m[2]))
+				Renderer.SetDrawColor(185, 214, 124, 255)
+				local itemsdrowes = 0
 
-                row_y = row_y + 12
+				local colorstep   = 255 / numofrows
+				for n, m in pairs(AutoChessHelper.buildUniques) do
+					if m[1] == AutoChessHelper.ChoosenBuildId then
+						Renderer.SetDrawColor(0, 150, 200, 255)
+					else
+						Renderer.SetDrawColor(math.floor(colorstep * itemsdrowes), 255 - (itemsdrowes * 12), itemsdrowes, 255)
+					end
+					
+					Renderer.DrawText(AutoChessHelper.Font1, pred_x - 4, row_y, string.format("%2.2d - %s", m[1], m[2]))
 
-                itemsdrowes = itemsdrowes + 1
-                if itemsdrowes >= numofrows then
-                    break
-                end
-            end
-            Renderer.SetDrawColor(255, 255, 255, 255)
-        end
+					row_y = row_y + 12
 
-        if AutoChessHelper.NeedPrediction and not AutoChessHelper.isPredictionWorking then
-            -- вычисление самой неповторяющейся сборки
-            AutoChessHelper.isPredictionWorking = true
-            Alerts.Add(string.format("Find unpopular builds..."), 1)
-            AutoChessHelper.buildUniques = {}
+					itemsdrowes = itemsdrowes + 1
+					if itemsdrowes >= numofrows then
+						break
+					end
+				end
+				Renderer.SetDrawColor(255, 255, 255, 255)
+			end
 
-            for i, b in ipairs(AutoChessHelper.Builds) do
-                local build = AutoChessHelper.getBuildByUrl(b.url)
-                local buildHeroes = {}
-                for i2, p in pairs(build) do
-                    local chp = AutoChessHelper.explode("-", p)
-                    local unit_id = tonumber(chp[2])
-                    local hero = AutoChessHelper.DotaChessXYZ[unit_id + 1].hero
-                    buildHeroes[hero] = unit_id
-                end
+			if AutoChessHelper.NeedPrediction and not AutoChessHelper.isPredictionWorking then
+				-- вычисление самой неповторяющейся сборки
+				AutoChessHelper.isPredictionWorking = true
 
-                local buildCleanPoints = 0
-                for t, f in pairs(AutoChessHelper.AllNpc) do
+				AutoChessHelper.buildUniques        = {}
+					Alerts.Add(string.format("Find unpopular builds..."), 1)
+					for i, b in ipairs(AutoChessHelper.Builds) do
+						local build       = AutoChessHelper.getBuildByUrl(b.url)
+						local buildHeroes = {}
+						for i2, p in pairs(build) do
+							local chp         = AutoChessHelper.explode("-", p)
+							local unit_id     = tonumber(chp[2])
+							local hero        = AutoChessHelper.DotaChessXYZ[unit_id + 1].hero
+							buildHeroes[hero] = unit_id
+						end
 
-                    local isTeamNpc = Entity.IsSameTeam(NPCs.Get(f), AutoChessHelper.Hero)
-                    --Log.Write(string.format("%s is teammate: %s", t, isTeamNpc));
+						local buildCleanPoints = 0
+						for t, f in pairs(AutoChessHelper.AllNpc) do
 
-                    if not isTeamNpc then
-                        if buildHeroes[t] then
-                            buildCleanPoints = buildCleanPoints + 1
-                            -- Log.Write(string.format("%s %s",t,f));
-                        end
-                    end
-                end
-                -- Log.Write(string.format("build %s - popularity: %s",i, buildCleanPoints));
-                table.insert(AutoChessHelper.buildUniques, { i, buildCleanPoints })
-            end
+							local isTeamNpc = Entity.IsSameTeam(NPCs.Get(f), AutoChessHelper.Hero)
+							--Log.Write(string.format("%s is teammate: %s", t, isTeamNpc));
 
-            table.sort(AutoChessHelper.buildUniques, function(a, b) return (a[2] < b[2]) end)
-            AutoChessHelper.NeedPrediction = false
-            AutoChessHelper.isPredictionWorking = false
-        end
+							if not isTeamNpc then
+								if buildHeroes[t] then
+									buildCleanPoints = buildCleanPoints + 1
+									-- Log.Write(string.format("%s %s",t,f));
+								end
+							end
+						end
+						-- Log.Write(string.format("build %s - popularity: %s",i, buildCleanPoints));
+						table.insert(AutoChessHelper.buildUniques, { i, buildCleanPoints })
+					end
+					table.sort(AutoChessHelper.buildUniques, function(a, b) return (a[2] < b[2]) end)
+
+				AutoChessHelper.NeedPrediction      = false
+				AutoChessHelper.isPredictionWorking = false
+			end
+		else -- DeckBuilder искать непопулярную сортировку !параметр выключен!
+			if Input.IsCursorInRect(pred_x - 4, pag_up_y, 25, 12) and Input.IsKeyDownOnce(Enum.ButtonCode.MOUSE_LEFT) then
+				if AutoChessHelper.Builds[AutoChessHelper.DeckBuilderPaginationStart - 1] then
+					AutoChessHelper.DeckBuilderPaginationStart = AutoChessHelper.DeckBuilderPaginationStart  - 1
+				end
+			end
+			if Input.IsCursorInRect(pred_x - 4, pag_down_y, 25, 12) and Input.IsKeyDownOnce(Enum.ButtonCode.MOUSE_LEFT) then
+				
+				if AutoChessHelper.Builds[(AutoChessHelper.DeckBuilderPaginationStart + 1) + numofrows] then
+					AutoChessHelper.DeckBuilderPaginationStart = AutoChessHelper.DeckBuilderPaginationStart  + 1
+				end
+			end
+			if Input.IsCursorInRect(pred_x - 4, row_y, 50, 12 * numofrows) and Input.IsKeyDownOnce(Enum.ButtonCode.MOUSE_LEFT) then
+				for buildn = AutoChessHelper.DeckBuilderPaginationStart, numofrows + AutoChessHelper.DeckBuilderPaginationStart do
+					if Input.IsCursorInRect(pred_x - 4, row_y + ((buildn - AutoChessHelper.DeckBuilderPaginationStart) * 12), 25, 12) then
+						Log.Write(string.format("n %s - build %s", buildn, AutoChessHelper.Builds[buildn]))
+						if AutoChessHelper.Builds[buildn] then
+							Console.RunCommand(string.format("ach.choose_build %s", buildn))
+						end
+					end
+				end
+			end
+			
+
+			do
+				local itemsdrowes = 0
+				local colorstep   = 255 / numofrows
+				Renderer.SetDrawColor(255, 255, 255, 255)
+				Renderer.DrawText(AutoChessHelper.Font1, pag_x, pag_up_y,"▲")
+				Renderer.DrawText(AutoChessHelper.Font1, pag_x, pag_down_y, "▼")
+				Renderer.SetDrawColor(185, 214, 124, 255)
+				for buildn = AutoChessHelper.DeckBuilderPaginationStart, numofrows+AutoChessHelper.DeckBuilderPaginationStart do
+					if AutoChessHelper.Builds[buildn] then
+						if buildn == AutoChessHelper.ChoosenBuildId then
+							Renderer.SetDrawColor(0, 150, 200, 255)
+						else
+							Renderer.SetDrawColor(185, 214, 124, 255)
+						end
+						Renderer.DrawText(AutoChessHelper.Font1, pred_x - 4, row_y, string.format("%2.2d", buildn))
+						row_y = row_y + 12
+	
+						itemsdrowes = itemsdrowes + 1
+						if itemsdrowes >= numofrows then
+							break
+						end
+					end
+					Renderer.SetDrawColor(255, 255, 255, 255)
+				end
+			end
+		end
 
         if AutoChessHelper.ChoosenBuild then
             -- отрисовка билда
@@ -588,7 +672,7 @@ function AutoChessHelper.OnDraw()
             Renderer.SetDrawColor(255, 255, 255, 45)
 
             if AutoChessHelper.ChoosenBuildName then
-                Renderer.DrawText(AutoChessHelper.Font1, x, y - 15, AutoChessHelper.ChoosenBuildName)
+                Renderer.DrawText(AutoChessHelper.Font1, x, y - 15, string.format("%2.2d. %s",AutoChessHelper.ChoosenBuildId, AutoChessHelper.ChoosenBuildName))
             end
 
             for i = 0, boardmatrix_x - 1 do
@@ -909,6 +993,7 @@ function AutoChessHelper.init()
     AutoChessHelper.CountNpc = nil
     AutoChessHelper.DrawTable = true
     AutoChessHelper.NeedUpdate = false
+    AutoChessHelper.DeckBuilderPaginationStart = 1
 end
 
 function AutoChessHelper.OnGameStart()
@@ -921,9 +1006,11 @@ end
 
 Console.AddCommand("ach.choose_build", 1, function(args) -- ach.choose_build <номер сборки>
     if AutoChessHelper.Builds[tonumber(args[2])] then
-        local build = AutoChessHelper.getBuildByUrl(AutoChessHelper.Builds[tonumber(args[2])].url);
-        Alerts.Add("ChessBuild successfully setted", 2)
-        AutoChessHelper.ChoosenBuildName = AutoChessHelper.Builds[tonumber(args[2])].description;
+		local buildtable = AutoChessHelper.Builds[tonumber(args[2])]
+        local build = AutoChessHelper.getBuildByUrl(buildtable.url);
+        Alerts.Add(string.format("ChessBuild %s - %s successfully setted",args[2],buildtable.description), 2)
+		AutoChessHelper.ChoosenBuildId = tonumber(args[2]);
+        AutoChessHelper.ChoosenBuildName = buildtable.description;
         AutoChessHelper.ChoosenBuild = build;
     end
 end)
@@ -937,6 +1024,7 @@ end)
 Console.AddCommand("ach.custom_build", 1, function(args) -- устанавливает свою сборку с сайта dotachess.xyz
     local build = AutoChessHelper.getBuildByUrl(args[2]);
     Alerts.Add("ChessBuild successfully setted", 2)
+    AutoChessHelper.ChoosenBuildId = -1;
     AutoChessHelper.ChoosenBuildName = "Custom build";
     AutoChessHelper.ChoosenBuild = build;
 end)
