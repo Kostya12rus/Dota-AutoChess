@@ -384,7 +384,7 @@ function AutoChessHelper.OnDraw()
                 for i,j in pairs(Heroes.GetAll()) do
                     if j and Heroes.Contains(j) and NPCs.Contains(j) then
                         local playerdata = AutoChessHelper.FindPlayer(Hero.GetPlayerID(j))
-                        if playerdata then
+                        if playerdata and Players.Contains(playerdata) then
                             Renderer.SetDrawColor(255, 255, 255, 255)
                             local name = tostring(Player.GetName(playerdata))
                             if name then
