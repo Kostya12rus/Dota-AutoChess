@@ -304,7 +304,7 @@ function AutoChessHelper.OnDraw()
                             if steamids and AutoChessHelper.Steam32id(steamids) > 0 and AutoChessHelper.Steam32id(steamids) < 9387111184 then
                                 AutoChessHelper.PlayerGametable[player] =
                                 {
-                                    connect1 = HTTP.NewConnection("http://101.200.189.65:431/dac/shop/get/@" .. steamids),
+                                    connect1 = HTTP.NewConnection("http://101.200.189.65:431/shop/get/@" .. steamids),
                                     rqst1 = nil,
                                     match = nil,
                                     rank = nil,
@@ -715,10 +715,8 @@ function AutoChessHelper.OnUpdate()
     end
     AutoChessHelper.MyNpcs,AutoChessHelper.EnemyNpcs = AutoChessHelper.TableNpcOnBox(AutoChessHelper.MyBox.pos1,AutoChessHelper.MyBox.pos2)
     
-    if not AutoChessHelper.NeedUpdate and Players.GetLocal() then
-        if Entity.IsPlayer(Players.GetLocal()) and Player.GetPlayerData(Players.GetLocal()).steamid then
-            AutoChessHelper.NeedUpdate = KostyaUtils.UpdateStatistick("AutoChess", Player.GetPlayerData(Players.GetLocal()).steamid)
-        end
+    if not AutoChessHelper.NeedUpdate then
+        AutoChessHelper.NeedUpdate = KostyaUtils.UpdateStatistick("AutoChess", Players.GetLocal())
     end
 
     if not AutoChessHelper.MyBoxHasItem and AutoChessHelper.Ipos then -- бежать герою на оптимальную позицию
