@@ -220,6 +220,10 @@ AutoChessHelper.Builds =
     {
         ["url"]         = "https://dotachess.xyz/?build=17-25,18-29,19-12,20-42,21-49,25-21,26-4,27-34,28-17,29-8&enemy",
         ["description"] = "KNIGHT + HUNTER + WARLOCK (V2)"
+    },
+    {
+        ["url"]         = "https://dotachess.xyz/?build=9-14,11-42,13-51,18-6,20-26,22-9,24-5,26-35,27-11,29-47&enemy",
+        ["description"] = "GOBLIN + MAGE"
     }
 }
 
