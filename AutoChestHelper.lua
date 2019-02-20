@@ -308,7 +308,7 @@ function AutoChessHelper.OnDraw()
                             if steamids and AutoChessHelper.Steam32id(steamids) > 0 and AutoChessHelper.Steam32id(steamids) < 9387111184 then
                                 AutoChessHelper.PlayerGametable[player] =
                                 {
-                                    connect1 = HTTP.NewConnection("http://101.200.189.65:431/shop/get/@" .. steamids),
+                                    connect1 = HTTP.NewConnection("http://101.200.189.65:431/ranking/get?player_ids=" .. steamids),
                                     rqst1 = nil,
                                     match = nil,
                                     rank = nil,
@@ -322,25 +322,26 @@ function AutoChessHelper.OnDraw()
                                 if not AutoChessHelper.PlayerGametable[player].rqst1 or not AutoChessHelper.PlayerGametable[player].rqst1:IsValid() then
                                     AutoChessHelper.PlayerGametable[player].rqst1 = AutoChessHelper.PlayerGametable[player].connect1:AsyncRequest("GET")
                                 end
-                                if  AutoChessHelper.PlayerGametable[player].rqst1
+                                if AutoChessHelper.PlayerGametable[player].rqst1
                                         and AutoChessHelper.PlayerGametable[player].rqst1:IsValid()
                                         and AutoChessHelper.PlayerGametable[player].rqst1:IsResolved() then
                                     local body = AutoChessHelper.PlayerGametable[player].rqst1:Get()
                                     local result = JSON.Decode(body)
-                                    if string.find(body,"success") and result then
-                                        if result.user_info then
-                                            if result.user_info.match then
-                                                AutoChessHelper.PlayerGametable[player].match = result.user_info.match
+                                    if result and string.len(body) > 50 then
+                                        local tablerank = result.ranking_info[1]
+                                        if tablerank then
+                                            if tablerank.match then
+                                                AutoChessHelper.PlayerGametable[player].match = tablerank.match
                                             else
                                                 AutoChessHelper.PlayerGametable[player].match = 0.0
                                             end
-                                            if result.user_info.mmr_level then
-                                                AutoChessHelper.PlayerGametable[player].rank = result.user_info.mmr_level
+                                            if tablerank.mmr_level then
+                                                AutoChessHelper.PlayerGametable[player].rank = tablerank.mmr_level
                                             else
                                                 AutoChessHelper.PlayerGametable[player].rank = 0.0
                                             end
-                                            if result.user_info.mmr then
-                                                AutoChessHelper.PlayerGametable[player].mmr = result.user_info.mmr
+                                            if tablerank.score then
+                                                AutoChessHelper.PlayerGametable[player].mmr = tablerank.score
                                             else
                                                 AutoChessHelper.PlayerGametable[player].mmr = 0.0
                                             end
