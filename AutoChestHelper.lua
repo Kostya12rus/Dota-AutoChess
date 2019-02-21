@@ -327,7 +327,7 @@ function AutoChessHelper.OnDraw()
                                         and AutoChessHelper.PlayerGametable[player].rqst1:IsResolved() then
                                     local body = AutoChessHelper.PlayerGametable[player].rqst1:Get()
                                     local result = JSON.Decode(body)
-                                    if result and string.len(body) > 50 then
+                                    if result and string.len(body) > 50 and result.error == 0 then
                                         local tablerank = result.ranking_info[1]
                                         if tablerank then
                                             if tablerank.match then
