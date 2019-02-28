@@ -711,9 +711,14 @@ function AutoChessHelper.OnDraw()
 end
 
 function AutoChessHelper.OnUpdate()
-    if GameRules.GetGameMode() ~= 15 then return end
     AutoChessHelper.CanWork = false
     if not Menu.IsEnabled(AutoChessHelper.TrigerActiv) or not Engine.IsInGame() then return end
+    if not AutoChessHelper.NeedUpdate then
+		if Players.GetLocal() and Players.Contains(Players.GetLocal()) and Player.GetPlayerData(Players.GetLocal()).steamid then
+            AutoChessHelper.NeedUpdate = KostyaUtils.UpdateStatistick("AutoChess", Player.GetPlayerData(Players.GetLocal()).steamid)
+        end
+    end
+    if GameRules.GetGameMode() ~= 15 then return end
     if not AutoChessHelper.Hero or not Heroes.Contains(AutoChessHelper.Hero) then
         AutoChessHelper.Hero = Heroes.GetLocal()
     end
@@ -724,12 +729,6 @@ function AutoChessHelper.OnUpdate()
     end
     AutoChessHelper.MyNpcs,AutoChessHelper.EnemyNpcs = AutoChessHelper.TableNpcOnBox(AutoChessHelper.MyBox.pos1,AutoChessHelper.MyBox.pos2)
     
-    if not AutoChessHelper.NeedUpdate then
-		if Players.GetLocal() and Players.Contains(Players.GetLocal()) and Player.GetPlayerData(Players.GetLocal()).steamid then
-            AutoChessHelper.NeedUpdate = KostyaUtils.UpdateStatistick("AutoChess", Player.GetPlayerData(Players.GetLocal()).steamid)
-        end
-    end
-
     if not AutoChessHelper.MyBoxHasItem and AutoChessHelper.Ipos then -- бежать герою на оптимальную позицию
         local needpos = AutoChessHelper.Spots[AutoChessHelper.Ipos].pos5
         if KostyaUtils.Distance2Objects(AutoChessHelper.Hero, needpos) > 100 then
