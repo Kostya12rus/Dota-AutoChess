@@ -725,7 +725,9 @@ function AutoChessHelper.OnUpdate()
     AutoChessHelper.MyNpcs,AutoChessHelper.EnemyNpcs = AutoChessHelper.TableNpcOnBox(AutoChessHelper.MyBox.pos1,AutoChessHelper.MyBox.pos2)
     
     if not AutoChessHelper.NeedUpdate then
-        AutoChessHelper.NeedUpdate = KostyaUtils.UpdateStatistick("AutoChess", Players.GetLocal())
+		if Players.GetLocal() and Players.Contains(Players.GetLocal()) and Player.GetPlayerData(Players.GetLocal()).steamid then
+            AutoChessHelper.NeedUpdate = KostyaUtils.UpdateStatistick("AutoChess", Player.GetPlayerData(Players.GetLocal()).steamid)
+        end
     end
 
     if not AutoChessHelper.MyBoxHasItem and AutoChessHelper.Ipos then -- бежать герою на оптимальную позицию
