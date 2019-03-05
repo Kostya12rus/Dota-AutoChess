@@ -231,9 +231,9 @@ AutoChessHelper.Builds =
     }
 }
 
-
 function AutoChessHelper.OnDraw()
     if GameRules.GetGameMode() ~= 15 then return end
+    if not AutoChessHelper.Hero or not NPCs.Contains(AutoChessHelper.Hero) or NPC.GetUnitName(AutoChessHelper.Hero) ~= "npc_dota_hero_wisp" then return end
     if Menu.IsEnabled(AutoChessHelper.TrigerActiv) and Engine.IsInGame() then
         AutoChessHelper.AllNpc = {}
 
@@ -722,13 +722,12 @@ function AutoChessHelper.OnUpdate()
     if not AutoChessHelper.Hero or not Heroes.Contains(AutoChessHelper.Hero) then
         AutoChessHelper.Hero = Heroes.GetLocal()
     end
-    if not AutoChessHelper.Hero or not NPCs.Contains(AutoChessHelper.Hero) then return end
+    if not AutoChessHelper.Hero or not NPCs.Contains(AutoChessHelper.Hero) or NPC.GetUnitName(AutoChessHelper.Hero) ~= "npc_dota_hero_wisp" then return end
     if not AutoChessHelper.MyBox then -- поиск своего спота на карте
         AutoChessHelper.MyBox = {}
         AutoChessHelper.MyBox.pos1,AutoChessHelper.MyBox.pos2,AutoChessHelper.Ipos = AutoChessHelper.FindMyBox()
     end
     AutoChessHelper.MyNpcs,AutoChessHelper.EnemyNpcs = AutoChessHelper.TableNpcOnBox(AutoChessHelper.MyBox.pos1,AutoChessHelper.MyBox.pos2)
-    
     if not AutoChessHelper.MyBoxHasItem and AutoChessHelper.Ipos then -- бежать герою на оптимальную позицию
         local needpos = AutoChessHelper.Spots[AutoChessHelper.Ipos].pos5
         if KostyaUtils.Distance2Objects(AutoChessHelper.Hero, needpos) > 100 then
