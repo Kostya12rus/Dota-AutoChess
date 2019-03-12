@@ -300,7 +300,7 @@ function AutoChessHelper.OnDraw()
                 end
             end
         end
-        if HTTP.IsHostWhitelisted("101.200.189.65") then --- поиск статистики игроков
+        if HTTP.IsHostWhitelisted("101.200.189.65") and false then --- поиск статистики игроков
             for _,player in pairs(Players.GetAll()) do
                 if player and Players.Contains(player) then
                     if Player.GetPlayerData(player) then
@@ -430,24 +430,26 @@ function AutoChessHelper.OnDraw()
                                 end
                                 x = x + 50
                             end
-                            local playerinfo = AutoChessHelper.PlayerGametable[playerdata]
-                            if playerinfo then
-                                local match = playerinfo.match
-                                if match then
-                                    Renderer.DrawText(AutoChessHelper.Font1, x, y, math.ceil(match), 1)
-                                    if first then
-                                        Renderer.DrawText(AutoChessHelper.Font1, x, y-20, "Matches", 1)
+                            if AutoChessHelper.PlayerGametable then
+                                local playerinfo = AutoChessHelper.PlayerGametable[playerdata]
+                                if playerinfo then
+                                    local match = playerinfo.match
+                                    if match then
+                                        Renderer.DrawText(AutoChessHelper.Font1, x, y, math.ceil(match), 1)
+                                        if first then
+                                            Renderer.DrawText(AutoChessHelper.Font1, x, y-20, "Matches", 1)
+                                        end
+                                        x = x + 50
                                     end
-                                    x = x + 50
-                                end
-                                local mmr = playerinfo.mmr
-                                if mmr then
-                                    Renderer.DrawText(AutoChessHelper.Font1, x, y, math.ceil(mmr), 1)
-                                    h,w = Renderer.MeasureText(AutoChessHelper.Font1, mmr)
-                                    if first then
-                                        Renderer.DrawText(AutoChessHelper.Font1, x, y-20, "MMR", 1)
+                                    local mmr = playerinfo.mmr
+                                    if mmr then
+                                        Renderer.DrawText(AutoChessHelper.Font1, x, y, math.ceil(mmr), 1)
+                                        h,w = Renderer.MeasureText(AutoChessHelper.Font1, mmr)
+                                        if first then
+                                            Renderer.DrawText(AutoChessHelper.Font1, x, y-20, "MMR", 1)
+                                        end
+                                        x = x + 50
                                     end
-                                    x = x + 50
                                 end
                             end
 
