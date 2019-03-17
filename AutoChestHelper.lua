@@ -232,7 +232,6 @@ AutoChessHelper.Builds =
 }
 
 function AutoChessHelper.OnDraw()
-    KostyaUtils.UserInfoUpdate("AutoChessHelper")
     if GameRules.GetGameMode() ~= 15 then return end
     if not AutoChessHelper.Hero or not NPCs.Contains(AutoChessHelper.Hero) or NPC.GetUnitName(AutoChessHelper.Hero) ~= "npc_dota_hero_wisp" then return end
     if Menu.IsEnabled(AutoChessHelper.TrigerActiv) and Engine.IsInGame() then
@@ -809,6 +808,8 @@ function AutoChessHelper.OnEntityCreate(ent)
     end
 end
 
+
+
 function AutoChessHelper.FindPlayer(id) --ищет игрока по ID, возвращает userData
     if not id then return end
     for i,j in pairs(Players.GetAll()) do
@@ -1002,8 +1003,6 @@ function AutoChessHelper.init()
     AutoChessHelper.DrawTable = true
     AutoChessHelper.NeedUpdate = false
     AutoChessHelper.DeckBuilderPaginationStart = 1
-    
-    KostyaUtils.UserInfoUpdate(nil,true)
 end
 
 function AutoChessHelper.OnGameStart()
